@@ -18,9 +18,9 @@ This project provides an MCP (Model Context Protocol) server that exposes tools 
 - Use the MCP SDK for server implementation
 
 **Language & Framework**
-- Primary language: Python 3.11+ (for MCP server compatibility)
-- Use the official MCP Python SDK
-- Leverage existing Pentaho Kettle XML parsing capabilities
+- Primary language: TypeScript (for MCP server compatibility)
+- Use the official MCP TypeScript SDK (@modelcontextprotocol/sdk)
+- Leverage existing Pentaho Kettle XML parsing capabilities (using xml2js or similar)
 - Support reading and writing Kettle .ktr (transformation) and .kjb (job) files
 
 ### 3. Code Quality Standards
@@ -28,7 +28,7 @@ This project provides an MCP (Model Context Protocol) server that exposes tools 
 **Readability**
 - Clear, self-documenting code with meaningful names
 - Comments only when necessary to explain "why", not "what"
-- Follow PEP 8 style guide for Python code
+- Follow TypeScript best practices and ESLint style guidelines
 - Maximum function length: ~50 lines
 - Maximum file length: ~500 lines
 
@@ -36,7 +36,7 @@ This project provides an MCP (Model Context Protocol) server that exposes tools 
 - Unit tests for core functionality
 - Integration tests for MCP tool endpoints
 - Test coverage target: 80%+ for critical paths
-- Use pytest as the testing framework
+- Use Jest or Vitest as the testing framework
 
 **Error Handling**
 - Fail fast with clear error messages
@@ -66,12 +66,11 @@ This project provides an MCP (Model Context Protocol) server that exposes tools 
 ```
 kettle-mcp/
 ├── src/
-│   ├── kettle_mcp/
-│   │   ├── __init__.py
-│   │   ├── server.py          # MCP server implementation
-│   │   ├── tools/              # Individual MCP tools
-│   │   ├── kettle/             # Kettle file parsing & manipulation
-│   │   └── utils/              # Utility functions
+│   ├── index.ts             # Main entry point
+│   ├── server.ts            # MCP server implementation
+│   ├── tools/               # Individual MCP tools
+│   ├── kettle/              # Kettle file parsing & manipulation
+│   └── utils/               # Utility functions
 ├── tests/
 │   ├── unit/
 │   └── integration/
@@ -79,7 +78,8 @@ kettle-mcp/
 │   └── sample_kettle_files/
 ├── docs/
 ├── .specify/
-├── pyproject.toml
+├── package.json
+├── tsconfig.json
 ├── README.md
 └── LICENSE
 ```
