@@ -113,7 +113,6 @@ The complete spec-kit workflow infrastructure:
 
 ### 3. Documentation
 
-### 3. Documentation
 
 #### Root Level
 - **README.md**: Project overview, features, getting started (updated for TypeScript)
