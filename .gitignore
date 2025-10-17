@@ -93,6 +93,9 @@ pnpm-debug.log*
 *.tsbuildinfo
 dist/
 build/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # Jest
 coverage/

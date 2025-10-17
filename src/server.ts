@@ -64,12 +64,12 @@ const KETTLE_TOOLS: Tool[] = [
  */
 export function registerTools(server: Server): void {
   // List available tools
-  server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  server.setRequestHandler(ListToolsRequestSchema, () => ({
     tools: KETTLE_TOOLS,
   }));
 
   // Handle tool calls
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  server.setRequestHandler(CallToolRequestSchema, (request) => {
     const { name, arguments: args } = request.params;
 
     switch (name) {

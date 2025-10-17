@@ -42,8 +42,8 @@ async function main(): Promise<void> {
     console.error('[MCP Error]', error);
   };
 
-  process.on('SIGINT', async (): Promise<void> => {
-    await server.close();
+  process.on('SIGINT', (): void => {
+    void server.close();
     process.exit(0);
   });
 
