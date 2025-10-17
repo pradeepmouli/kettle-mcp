@@ -122,9 +122,9 @@ mypy src/
 
 ## Next Steps
 
-- Read the [Architecture Documentation](architecture.md)
+- Architecture documentation coming soon
 - Learn about [Kettle File Formats](kettle-formats.md)
-- See [API Reference](api-reference.md) for detailed tool documentation
+- API Reference coming soon
 - Check out [Examples](../examples/sample_kettle_files/README.md)
 
 ## Troubleshooting
