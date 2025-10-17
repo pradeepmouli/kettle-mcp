@@ -37,10 +37,7 @@ uv pip install -e ".[dev]"
 
 ### Running the MCP Server
 
-```bash
-# Start the server
-python -m kettle_mcp.server
-```
+> **Note:** The MCP server module (`kettle_mcp.server`) is coming soon. Please check back for updates or follow the repository for announcements.
 
 ### Using with an MCP Client
 
