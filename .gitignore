@@ -81,6 +81,23 @@ dmypy.json
 # pyenv
 .python-version
 
+# Node.js / TypeScript
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm
+.eslintcache
+.node_repl_history
+*.tsbuildinfo
+dist/
+build/
+
+# Jest
+coverage/
+.nyc_output/
+
 # MacOS
 .DS_Store
 

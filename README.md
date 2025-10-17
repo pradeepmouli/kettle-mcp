@@ -20,27 +20,68 @@ This project uses [GitHub Spec-Kit](https://github.com/github/spec-kit) for spec
 
 ```
 kettle-mcp/
-├── .specify/                  # Spec-kit configuration and templates
-│   ├── memory/               # Project memory (constitution)
-│   ├── scripts/              # Automation scripts
-│   ├── specs/                # Feature specifications
-│   └── templates/            # Document templates
-├── src/                      # Source code (to be created)
-│   └── kettle_mcp/          # Main package
-├── tests/                    # Tests (to be created)
-├── docs/                     # Documentation
-├── examples/                 # Example Kettle files
-├── README.md                 # This file
-└── LICENSE                   # MIT License
+├── .github/                    # GitHub workflows and prompts
+├── .specify/                   # Spec-kit configuration and templates
+│   ├── memory/                # Project memory (constitution)
+│   ├── scripts/               # Automation scripts
+│   ├── specs/                 # Feature specifications
+│   └── templates/             # Document templates
+├── src/                       # TypeScript source code
+│   ├── index.ts              # Main entry point
+│   ├── server.ts             # MCP server implementation
+│   ├── tools/                # Individual MCP tools
+│   ├── kettle/               # Kettle file parsing & manipulation
+│   └── utils/                # Utility functions
+├── tests/                     # Test files
+│   ├── unit/                 # Unit tests
+│   └── integration/          # Integration tests
+├── docs/                      # Documentation
+├── examples/                  # Example Kettle files
+├── package.json               # Node.js dependencies
+├── tsconfig.json              # TypeScript configuration
+├── README.md                  # This file
+└── LICENSE                    # MIT License
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python 3.11 or higher
+- Node.js 18.0 or higher
+- npm or yarn package manager
 - Git
 - An MCP-compatible AI agent (Claude, Copilot, etc.)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/pradeepmouli/kettle-mcp.git
+   cd kettle-mcp
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Build the project:
+   ```bash
+   npm run build
+   ```
+
+4. Run tests:
+   ```bash
+   npm test
+   ```
+
+### Development
+
+- **Build**: `npm run build` - Compile TypeScript to JavaScript
+- **Dev mode**: `npm run dev` - Watch mode for development
+- **Test**: `npm test` - Run test suite
+- **Lint**: `npm run lint` - Check code quality
+- **Format**: `npm run format` - Format code with Prettier
 
 ### Development Workflow
 
