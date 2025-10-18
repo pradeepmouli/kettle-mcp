@@ -97,7 +97,7 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
-# Jest
+# Vitest
 coverage/
 .nyc_output/
 
