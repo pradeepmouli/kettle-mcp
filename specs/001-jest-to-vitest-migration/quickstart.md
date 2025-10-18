@@ -1,7 +1,7 @@
 # Quickstart: Jest to Vitest Migration
 
-**Date**: October 17, 2025  
-**Feature**: Jest to Vitest Migration  
+**Date**: October 17, 2025
+**Feature**: Jest to Vitest Migration
 **Purpose**: Step-by-step migration guide for developers
 
 ## Prerequisites
@@ -101,7 +101,7 @@ npm test
 # Test watch mode (press 'q' to quit)
 npm run test:watch
 
-# Test coverage reporting  
+# Test coverage reporting
 npm run test:coverage
 ```
 

@@ -7,13 +7,13 @@
 {
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "jest": "^29.7.0", 
+    "jest": "^29.7.0",
     "ts-jest": "^29.1.2"
   }
 }
 ```
 
-### Vitest Dependencies (TO BE ADDED)  
+### Vitest Dependencies (TO BE ADDED)
 ```json
 {
   "devDependencies": {
@@ -27,7 +27,7 @@
 {
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest", 
+    "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
   }
 }
@@ -48,7 +48,7 @@
   "collectCoverageFrom": [
     "src/**/*.ts",
     "!src/**/*.d.ts",
-    "!src/**/*.test.ts", 
+    "!src/**/*.test.ts",
     "!src/**/*.spec.ts"
   ],
   "coverageThreshold": {
@@ -110,7 +110,7 @@ export default defineConfig({
 - `npm run test:coverage` MUST generate coverage reports with same thresholds
 - All scripts MUST have identical exit codes (0 for success, non-zero for failure)
 
-### Coverage Contract  
+### Coverage Contract
 - Coverage reports MUST maintain 80% threshold for branches, functions, lines, statements
 - Coverage output format MUST be compatible with existing CI/CD pipeline
 - Coverage files MUST be generated in standard locations
@@ -122,5 +122,5 @@ export default defineConfig({
 
 ### Development Tool Contract
 - MUST NOT conflict with existing ESLint configuration
-- MUST NOT conflict with existing Prettier configuration  
+- MUST NOT conflict with existing Prettier configuration
 - MUST work with VS Code TypeScript integration

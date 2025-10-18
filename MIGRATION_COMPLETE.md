@@ -35,7 +35,7 @@
 ```json
 {
   "test": "vitest run",
-  "test:watch": "vitest", 
+  "test:watch": "vitest",
   "test:coverage": "vitest run --coverage",
   "test:ui": "vitest --ui"
 }

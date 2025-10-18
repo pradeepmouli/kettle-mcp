@@ -12,7 +12,7 @@
 
 ### Jest Configuration (jest.config.json)
 - **Preset**: ts-jest
-- **Environment**: node  
+- **Environment**: node
 - **Test Roots**: src/, tests/
 - **Test Patterns**: **/__tests__/**/*.ts, **/?(*.)+(spec|test).ts
 - **Coverage Collection**: src/**/*.ts (excluding .d.ts, .test.ts, .spec.ts)

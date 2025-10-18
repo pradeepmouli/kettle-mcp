@@ -1,7 +1,7 @@
 # Specification Quality Checklist: Jest to Vitest Migration
 
-**Purpose**: Validate specification completeness and quality before proceeding to planning  
-**Created**: October 17, 2025  
+**Purpose**: Validate specification completeness and quality before proceeding to planning
+**Created**: October 17, 2025
 **Feature**: [spec.md](../spec.md)
 
 ## Content Quality

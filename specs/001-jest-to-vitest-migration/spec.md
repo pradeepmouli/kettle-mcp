@@ -1,8 +1,8 @@
 # Feature Specification: Jest to Vitest Migration
 
-**Feature Branch**: `001-jest-to-vitest-migration`  
-**Created**: October 17, 2025  
-**Status**: Draft  
+**Feature Branch**: `001-jest-to-vitest-migration`
+**Created**: October 17, 2025
+**Status**: Draft
 **Input**: User description: "migrate from jest to vitest"
 
 ## User Scenarios & Testing *(mandatory)*
@@ -128,4 +128,3 @@ Developers can leverage Vitest's improved features such as better ES module supp
 - Modifying ESLint or Prettier configurations unless required for Vitest compatibility
 - Performance optimization beyond the inherent benefits of Vitest
 - Adding new testing features not present in the current Jest setup
-
