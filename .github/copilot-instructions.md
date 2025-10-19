@@ -1,9 +1,10 @@
 # kettle-mcp Development Guidelines
 
-Auto-generated from all feature plans. Last updated: 2025-10-17
+Auto-generated from all feature plans. Last updated: 2025-10-18
 
 ## Active Technologies
-- TypeScript (target ES2022, Node16 module resolution) + @modelcontextprotocol/sdk, xml2js, TypeScrip (001-jest-to-vitest-migration)
+- TypeScript (Node.js >= 18) + `@modelcontextprotocol/sdk` (MCP), `fast-xml-parser` (parse/write via j2x), `zod` (I/O schemas), `fast-glob` (scan), `diff` (unified diff) (001-kettle-tools-implementation)
+- Local filesystem (no persistent DB) (001-kettle-tools-implementation)
 
 ## Project Structure
 ```
@@ -15,10 +16,11 @@ tests/
 npm test && npm run lint
 
 ## Code Style
-TypeScript (target ES2022, Node16 module resolution): Follow standard conventions
+TypeScript (Node.js >= 18): Follow standard conventions
 
 ## Recent Changes
-- 001-jest-to-vitest-migration: Added TypeScript (target ES2022, Node16 module resolution) + @modelcontextprotocol/sdk, xml2js, TypeScrip
+- 001-kettle-tools-implementation: Added TypeScript (Node.js >= 18) + `@modelcontextprotocol/sdk` (MCP), `fast-xml-parser` (parse/write via j2x), `zod` (I/O schemas), `fast-glob` (scan), `diff` (unified diff)
+- 001-kettle-tools-implementation: Added TypeScript (Node.js >= 18) + `@modelcontextprotocol/sdk` (MCP), `xml2js` (parse), `xmlbuilder2` (write), `fast-glob` (scan), `diff` (unified diff), `ajv` (optional schema-ish validations)
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

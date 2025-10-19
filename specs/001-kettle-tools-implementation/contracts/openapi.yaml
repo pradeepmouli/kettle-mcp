@@ -1,0 +1,90 @@
+openapi: 3.1.0
+info:
+  title: Kettle-MCP Tools (Reference API)
+  version: 0.1.0
+  description: Reference HTTP shapes for MCP-equivalent tools (documentation aid)
+paths:
+  /inspect:
+    get:
+      summary: Summarize a Kettle artifact
+      parameters:
+        - in: query
+          name: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Summary
+  /validate:
+    get:
+      summary: Validate a Kettle artifact
+      parameters:
+        - in: query
+          name: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Validation issues
+  /search:
+    get:
+      summary: Search artifacts
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results
+  /edit/preview:
+    post:
+      summary: Preview edits as diff
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Unified diff preview
+  /edit/save:
+    post:
+      summary: Apply edits safely
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Save result with backup path
+  /deps:
+    get:
+      summary: Dependencies and dependents
+      parameters:
+        - in: query
+          name: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dependency graph
+  /execute/local:
+    post:
+      summary: Execute artifact locally (opt-in)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Execution summary
