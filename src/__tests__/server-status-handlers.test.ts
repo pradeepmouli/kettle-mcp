@@ -1,9 +1,10 @@
 import fs from 'fs';
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import * as statusHandlers from '../handlers/server-status-handlers';
+import os from 'os';
 
-const TEST_TRANS = '/tmp/test-status.ktr';
-const TEST_JOB = '/tmp/test-status.kjb';
+const TEST_TRANS = `${os.tmpdir()}/test-status.ktr`;
+const TEST_JOB = `${os.tmpdir()}/test-status.kjb`;
 
 describe('Server Status and Lifecycle Handlers', () => {
 	beforeAll(() => {
