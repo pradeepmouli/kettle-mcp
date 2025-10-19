@@ -31,7 +31,7 @@ This project follows **Spec-Driven Development** using GitHub Spec-Kit.
 **Purpose**: MCP server for Pentaho Kettle job and transformation management
 
 **Technology Stack**:
-- Python 3.11+
+- node.js 18+
 - MCP SDK
 - XML parsing for Kettle files (.kjb, .ktr)
 
