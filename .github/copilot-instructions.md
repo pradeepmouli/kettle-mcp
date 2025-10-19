@@ -3,7 +3,6 @@
 Auto-generated from all feature plans. Last updated: 2025-10-18
 
 ## Active Technologies
-- TypeScript (Node.js >= 18) + `@modelcontextprotocol/sdk` (MCP), `xml2js` (parse), `xmlbuilder2` (write), `fast-glob` (scan), `diff` (unified diff), `ajv` (optional schema-ish validations) (001-kettle-tools-implementation)
 - TypeScript (Node.js >= 18) + `@modelcontextprotocol/sdk` (MCP), `fast-xml-parser` (parse/write via j2x), `zod` (I/O schemas), `fast-glob` (scan), `diff` (unified diff) (001-kettle-tools-implementation)
 - Local filesystem (no persistent DB) (001-kettle-tools-implementation)
 
