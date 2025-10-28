@@ -13,14 +13,14 @@ Expand the Kettle MCP server's step type library from 12 currently implemented t
 
 ## Technical Context
 
-**Language/Version**: TypeScript (Node.js >= 18)  
-**Primary Dependencies**: @modelcontextprotocol/sdk (MCP server), zod (schema validation and serialization), fast-xml-parser (XML I/O for Kettle files)  
-**Storage**: In-memory registry (no persistence - stateless MCP server)  
-**Testing**: Vitest with @vitest/coverage-v8 (current: 78% coverage, target: maintain 75%+)  
-**Target Platform**: Node.js server exposing MCP protocol (stdio/SSE transport)  
-**Project Type**: Single project (MCP server at repository root)  
-**Performance Goals**: <50ms for step type list operations, <100ms for schema retrieval (even with 150+ types)  
-**Constraints**: Stateless server (no caching across requests), memory-efficient registry, backward compatible API  
+**Language/Version**: TypeScript (Node.js >= 18)
+**Primary Dependencies**: @modelcontextprotocol/sdk (MCP server), zod (schema validation and serialization), fast-xml-parser (XML I/O for Kettle files)
+**Storage**: In-memory registry (no persistence - stateless MCP server)
+**Testing**: Vitest with @vitest/coverage-v8 (current: 78% coverage, target: maintain 75%+)
+**Target Platform**: Node.js server exposing MCP protocol (stdio/SSE transport)
+**Project Type**: Single project (MCP server at repository root)
+**Performance Goals**: <50ms for step type list operations, <100ms for schema retrieval (even with 150+ types)
+**Constraints**: Stateless server (no caching across requests), memory-efficient registry, backward compatible API
 **Scale/Scope**: 150+ step types (from current 12), organized across 10 categories, ~140 new type definitions to implement
 
 ## Constitution Check
@@ -31,7 +31,7 @@ Expand the Kettle MCP server's step type library from 12 currently implemented t
 
 ✅ **Simplicity First**: This feature extends the existing step type registry without adding new dependencies or architectural patterns. Uses the same modular structure established in feature 002 (`src/kettle/schemas/transformations/stepTypes/*.ts`). No new libraries, no new concepts - just data expansion.
 
-✅ **Technology Philosophy**: 
+✅ **Technology Philosophy**:
 - Uses existing MCP SDK, Zod, and fast-xml-parser stack
 - No new dependencies required
 - Leverages TypeScript's type system for compile-time safety
@@ -129,7 +129,7 @@ docs/
 └── step-type-coverage.md        # NEW: Document implemented step types by category
 ```
 
-**Structure Decision**: 
+**Structure Decision**:
 
 This feature extends the existing single-project structure established in features 001 and 002. The modular category-based organization (`input.ts`, `output.ts`, `transform.ts`, etc.) enables:
 
@@ -147,13 +147,13 @@ The registry aggregation in `index.ts` maintains a single source of truth (`STEP
 **File Length Increase** (Constitution limit: ~500 lines, expected: 1000-1500 for some categories)
 
 - **Violation**: `transform.ts` and `input.ts` may exceed 500 lines (transform: ~1200 lines, input: ~900 lines)
-- **Justification**: 
+- **Justification**:
   - Category-based organization superior to 150+ individual files
   - Related step types logically grouped (all joins together, all aggregations together)
   - IDE outline/search makes large files navigable
   - Alternative (one file per step type) creates discovery/navigation overhead
   - Each step type definition is ~25-30 lines (schema + metadata) - predictable pattern
-- **Mitigation**: 
+- **Mitigation**:
   - Strict structure within files (Input steps → Transform steps → etc.)
   - Clear JSDoc comments for each step type
   - Consistent naming (typeId alphabetical order within category)
@@ -167,4 +167,3 @@ The registry aggregation in `index.ts` maintains a single source of truth (`STEP
 |-----------|------------|-------------------------------------|
 | [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
 | [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
-

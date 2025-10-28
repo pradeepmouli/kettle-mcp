@@ -1,7 +1,7 @@
 # Research: Complete Kettle Step Type Library
 
-**Feature**: 003-all-kettle-step-types  
-**Date**: 2025-10-28  
+**Feature**: 003-all-kettle-step-types
+**Date**: 2025-10-28
 **Purpose**: Research Kettle step types, categorization patterns, and implementation best practices
 
 ## Research Questions
@@ -119,7 +119,7 @@ export enum StepCategory {
 }
 ```
 
-**Rationale**: 
+**Rationale**:
 - Aligns with ETL mental model (extract → transform → load)
 - Clear separation of concerns
 - Enables targeted filtering by workflow phase
@@ -152,16 +152,16 @@ Current tag taxonomy (from `src/utils/tag-taxonomy.ts` in feature 002):
 export const TAG_TAXONOMY = {
   // Data sources (12 tags)
   dataSource: ['database', 'file', 'streaming', 'api', 'nosql', 'cloud', ...],
-  
+
   // File formats (10 tags)
   fileFormat: ['csv', 'json', 'xml', 'excel', 'text', 'parquet', 'avro', ...],
-  
+
   // Operations (15 tags)
   operation: ['read', 'write', 'transform', 'filter', 'join', 'lookup', 'aggregate', ...],
-  
+
   // Technologies (20 tags)
   technology: ['sql', 'nosql', 'kafka', 'mongodb', 'hadoop', 's3', 'rest', ...],
-  
+
   // Data quality (8 tags)
   quality: ['validate', 'cleanse', 'deduplicate', 'checksum', 'quality', ...],
 };
@@ -188,6 +188,7 @@ Each step type receives 3-5 tags from this taxonomy based on primary use cases.
 **Complex Configuration Examples**:
 
 1. **Joiner** (multiple join keys, join type selection):
+
 ```typescript
 const joinerConfigSchema = z.object({
   joinType: z.enum(['INNER', 'LEFT', 'RIGHT', 'FULL']),
@@ -201,6 +202,7 @@ const joinerConfigSchema = z.object({
 ```
 
 2. **Group By** (multiple group fields, multiple aggregations):
+
 ```typescript
 const groupByConfigSchema = z.object({
   groupFields: z.array(z.object({
@@ -215,6 +217,7 @@ const groupByConfigSchema = z.object({
 ```
 
 3. **Database Connection** (reusable pattern):
+
 ```typescript
 const databaseConnectionSchema = z.object({
   connection: z.string().describe('Database connection name'),
@@ -417,7 +420,7 @@ examples: [
 ### Kettle Step Type Research Sources
 
 1. **Official Documentation**:
-   - Pentaho Data Integration docs: https://help.hitachivantara.com/Documentation/Pentaho/
+   - Pentaho Data Integration docs: <https://help.hitachivantara.com/Documentation/Pentaho/>
    - Step reference guides in PDI documentation
 
 2. **Source Code**:

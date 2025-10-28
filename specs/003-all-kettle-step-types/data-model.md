@@ -1,7 +1,7 @@
 # Data Model: Complete Kettle Step Type Library
 
-**Feature**: 003-all-kettle-step-types  
-**Date**: 2025-10-28  
+**Feature**: 003-all-kettle-step-types
+**Date**: 2025-10-28
 **Purpose**: Define entity structures and relationships for comprehensive step type library
 
 ---
@@ -129,20 +129,20 @@ export const TAG_TAXONOMY = {
     'database', 'file', 'streaming', 'api', 'nosql', 'cloud',
     'queue', 'cache', 'ldap', 'email', 'ftp', 'sftp'
   ],
-  
+
   // File Formats (12 tags)
   fileFormats: [
     'csv', 'json', 'xml', 'excel', 'text', 'parquet',
     'avro', 'orc', 'yaml', 'properties', 'ldif', 'access'
   ],
-  
+
   // Operations (18 tags)
   operations: [
     'read', 'write', 'transform', 'filter', 'join', 'lookup',
     'aggregate', 'sort', 'deduplicate', 'normalize', 'denormalize',
     'validate', 'cleanse', 'calculate', 'split', 'merge', 'pivot', 'unpivot'
   ],
-  
+
   // Technologies (22 tags)
   technologies: [
     'sql', 'nosql', 'mysql', 'postgresql', 'oracle', 'sqlserver',
@@ -150,13 +150,13 @@ export const TAG_TAXONOMY = {
     'hadoop', 'spark', 'hdfs', 'hbase', 's3', 'azure', 'gcp',
     'rest', 'soap', 'http'
   ],
-  
+
   // Data Quality (8 tags)
   quality: [
     'quality', 'validation', 'checksum', 'deduplication',
     'cleansing', 'profiling', 'sampling', 'monitoring'
   ],
-  
+
   // Scripting (6 tags)
   scripting: [
     'javascript', 'java', 'groovy', 'python', 'shell', 'sql-script'

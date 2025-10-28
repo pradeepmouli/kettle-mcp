@@ -1,6 +1,6 @@
 # Tasks: Complete Kettle Step Type Library
 
-**Input**: Design documents from `/specs/003-all-kettle-step-types/`  
+**Input**: Design documents from `/specs/003-all-kettle-step-types/`
 **Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/, quickstart.md
 
 **Tests**: Tests are NOT explicitly requested in the specification. This feature extends existing discovery APIs which already have comprehensive test coverage. Test updates will be minimal and focused on validation.
@@ -21,8 +21,8 @@ Single project structure at repository root: `src/`, `tests/`
 
 ## Implementation Strategy
 
-**MVP Scope**: User Stories 1-3 (P1) - Core ETL capabilities (Input, Transform, Output)  
-**Enhanced Scope**: User Stories 4-5 (P2) - Advanced workflows (Utility, Flow, Lookup/Join)  
+**MVP Scope**: User Stories 1-3 (P1) - Core ETL capabilities (Input, Transform, Output)
+**Enhanced Scope**: User Stories 4-5 (P2) - Advanced workflows (Utility, Flow, Lookup/Join)
 **Full Scope**: User Stories 6-7 (P3) - Specialized capabilities (Data Quality, Big Data/Cloud)
 
 **Incremental Delivery**:
@@ -55,10 +55,10 @@ Single project structure at repository root: `src/`, `tests/`
 
 **Purpose**: Extend tag taxonomy and update StepCategory enum with new values
 
-- [ ] T001 [P] Extend TAG_TAXONOMY in src/utils/tag-taxonomy.ts with 60 new tags (cloud, bigdata, nosql, scripting, quality categories)
-- [ ] T002 [P] Update StepCategory enum in src/kettle/schemas/transformations/stepTypes/types.ts to add LOOKUP, JOIN, FLOW, SCRIPTING, BIGDATA, VALIDATION categories
-- [ ] T003 [P] Create empty category files: src/kettle/schemas/transformations/stepTypes/lookup.ts, flow.ts, scripting.ts, utility.ts, bigdata.ts, validation.ts
-- [ ] T004 Update src/kettle/schemas/transformations/stepTypes/index.ts to import and export new category registries
+- [x] T001 [P] Extend TAG_TAXONOMY in src/utils/tag-taxonomy.ts with 60 new tags (cloud, bigdata, nosql, scripting, quality categories)
+- [x] T002 [P] Update StepCategory enum in src/kettle/schemas/transformations/stepTypes/types.ts to add LOOKUP, JOIN, FLOW, SCRIPTING, BIGDATA, VALIDATION categories
+- [x] T003 [P] Create empty category files: src/kettle/schemas/transformations/stepTypes/lookup.ts, flow.ts, scripting.ts, utility.ts, bigdata.ts, validation.ts
+- [x] T004 Update src/kettle/schemas/transformations/stepTypes/index.ts to import and export new category registries
 
 **Checkpoint**: ✅ Infrastructure ready - user story implementation can now begin in parallel
 
