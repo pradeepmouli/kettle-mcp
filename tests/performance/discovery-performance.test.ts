@@ -3,7 +3,7 @@ import { getStepTypeSchematool, listStepTypesTool } from '../../src/tools/discov
 
 /**
  * Performance tests for discovery APIs
- * 
+ *
  * Requirements:
  * - list_step_types should complete in <50ms
  * - get_step_type_schema should complete in <100ms
@@ -63,7 +63,7 @@ describe('Discovery API Performance', () => {
 
 	it('should perform multiple schema retrievals efficiently', async () => {
 		const stepTypes = ['TableInput', 'TextFileInput', 'SelectValues', 'TextFileOutput'];
-		
+
 		const startTime = performance.now();
 		for (const typeId of stepTypes) {
 			await getStepTypeSchematool(typeId);

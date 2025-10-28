@@ -2,30 +2,30 @@ import { z } from 'zod';
 
 /**
  * Represents a serialized field from a Zod schema.
- * 
+ *
  * This interface provides a JSON-friendly representation of Zod schema fields
  * that LLM agents can easily understand and use for configuration generation.
  */
 export interface SerializedField {
 	/** Field name as it appears in the configuration object */
 	name: string;
-	
+
 	/** Normalized type (e.g., "string", "number", "boolean", "array", "object") */
 	type: string;
-	
+
 	/** Whether this field is required (true) or optional (false) */
 	required: boolean;
-	
+
 	/** Human-readable description explaining the field's purpose and usage */
 	description: string;
-	
+
 	/** Default value if the field is not provided (only present if a default exists) */
 	default?: any;
 }
 
 /**
  * Represents a serialized Zod schema.
- * 
+ *
  * Contains an array of serialized fields that describe the complete configuration
  * structure for a step type or job entry type.
  */
@@ -36,21 +36,21 @@ export interface SerializedSchema {
 
 /**
  * Serialize a Zod object schema to a JSON-friendly format for LLM consumption.
- * 
+ *
  * This function converts Zod schemas (which use TypeScript types and runtime validation)
  * into a simple JSON structure that LLM agents can easily parse and understand. The
  * serialized format includes field names, types, required flags, descriptions, and
  * default values.
- * 
+ *
  * LLM agents use this serialized schema to:
  * 1. Understand what configuration fields are available
  * 2. Identify required vs. optional fields
  * 3. Determine appropriate field types and values
  * 4. Generate valid configurations from examples
- * 
+ *
  * @param schema - Zod object schema to serialize (e.g., tableInputConfigSchema)
  * @returns Serialized schema with field metadata in JSON-friendly format
- * 
+ *
  * @example
  * // Serialize a step configuration schema
  * const schema = z.object({
@@ -58,7 +58,7 @@ export interface SerializedSchema {
  *   sql: z.string().describe('SQL query'),
  *   limit: z.number().optional().describe('Row limit'),
  * });
- * 
+ *
  * const serialized = serializeZodSchema(schema);
  * // Returns:
  * // {
@@ -113,26 +113,26 @@ export function serializeZodSchema(schema: z.ZodObject<any>): SerializedSchema {
 
 /**
  * Normalize Zod type names to common, LLM-friendly type names.
- * 
+ *
  * Converts Zod's internal type names (e.g., "ZodString", "ZodNumber") to
  * standard type names that are easier for LLM agents to understand and work
  * with (e.g., "string", "number").
- * 
+ *
  * Handles wrapper types (ZodOptional, ZodNullable, ZodDefault) by unwrapping
  * them to get the underlying type.
- * 
+ *
  * @param zodTypeName - Zod internal type name (e.g., "ZodString", "ZodOptional")
  * @param fieldSchema - The Zod field schema for additional context (used to unwrap wrapper types)
  * @returns Normalized type name (e.g., "string", "number", "boolean", "array", "object")
- * 
+ *
  * @example
  * // Direct type
  * normalizeZodType('ZodString', stringField) // Returns: "string"
- * 
+ *
  * @example
  * // Optional wrapper
  * normalizeZodType('ZodOptional', optionalStringField) // Returns: "string"
- * 
+ *
  * @example
  * // Default wrapper
  * normalizeZodType('ZodDefault', defaultNumberField) // Returns: "number"

@@ -3,12 +3,12 @@
  *
  * Validates that all examples from specs/002-step-type-discovery/quickstart.md work correctly
  */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
-	listStepTypesTool,
+	getJobEntryTypeSchemaTool,
 	getStepTypeSchematool,
 	listJobEntryTypesTool,
-	getJobEntryTypeSchemaTool,
+	listStepTypesTool,
 } from '../../src/tools/discovery_tools';
 
 describe('Quickstart Validation', () => {

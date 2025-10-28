@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { ALL_TAGS } from '../../src/kettle/schemas/tag-taxonomy.js';
 import { listJobEntryTypes } from '../../src/kettle/schemas/jobs/entryTypes/index.js';
+import { ALL_TAGS } from '../../src/kettle/schemas/tag-taxonomy.js';
 import { listStepTypes } from '../../src/kettle/schemas/transformations/stepTypes/index.js';
 
 /**
@@ -80,7 +80,7 @@ describe('Code Review - Standards Compliance', () => {
 			[...stepTypes, ...entryTypes].forEach((type: any) => {
 				const hasSpaces = type.displayName.includes(' ');
 				const isCamelCase = /[a-z][A-Z]/.test(type.displayName);
-				
+
 				expect(
 					hasSpaces || isCamelCase || type.displayName.length < 15,
 					`Type "${type.typeId}" has unclear display name: "${type.displayName}"`
