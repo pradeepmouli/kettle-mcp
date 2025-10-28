@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: Add Transformation Hop
+  version: 1.0.0
+  description: API contract for adding a hop between two steps in a transformation
+paths:
+  /add_transformation_hop:
+    post:
+      summary: Add a hop between two steps
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                  description: Absolute path to the .ktr file
+                from:
+                  type: string
+                  description: Name of the source step
+                to:
+                  type: string
+                  description: Name of the target step
+              required:
+                - filePath
+                - from
+                - to
+      responses:
+        '200':
+          description: Hop added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  transformation:
+                    type: object
+                  warnings:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Validation or input error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  details:
+                    type: object

@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: Update Transformation Step
+  version: 1.0.0
+  description: API contract for updating a step in a Kettle transformation
+paths:
+  /update_transformation_step:
+    post:
+      summary: Update an existing step's configuration or coordinates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                  description: Absolute path to the .ktr file
+                name:
+                  type: string
+                  description: Step name (unique within transformation)
+                configuration:
+                  type: object
+                  description: New configuration (per type schema)
+                xloc:
+                  type: integer
+                  minimum: 0
+                  maximum: 9999
+                  description: New X coordinate (optional)
+                yloc:
+                  type: integer
+                  minimum: 0
+                  maximum: 9999
+                  description: New Y coordinate (optional)
+              required:
+                - filePath
+                - name
+      responses:
+        '200':
+          description: Step updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  transformation:
+                    type: object
+                  warnings:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Validation or input error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  details:
+                    type: object

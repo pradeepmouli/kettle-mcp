@@ -1,0 +1,148 @@
+{
+	"toolName": "get_job_entry_type_schema",
+	"description": "Get the detailed configuration schema for a specific job entry type, including field definitions, types, requirements, and optional examples.",
+	"inputSchema": {
+		"type": "object",
+		"required": [
+			"typeId"
+		],
+		"properties": {
+			"typeId": {
+				"type": "string",
+				"description": "Job entry type identifier (e.g., 'JOB', 'TRANS', 'MAIL')"
+			}
+		}
+	},
+	"outputSchema": {
+		"type": "object",
+		"required": [
+			"typeId",
+			"category",
+			"displayName",
+			"description",
+			"tags",
+			"schema"
+		],
+		"properties": {
+			"typeId": {
+				"type": "string"
+			},
+			"category": {
+				"type": "string"
+			},
+			"displayName": {
+				"type": "string"
+			},
+			"description": {
+				"type": "string"
+			},
+			"tags": {
+				"type": "array",
+				"items": {
+					"type": "string"
+				}
+			},
+			"schema": {
+				"type": "object",
+				"required": [
+					"fields"
+				],
+				"properties": {
+					"fields": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": [
+								"name",
+								"type",
+								"required",
+								"description"
+							],
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"type": {
+									"type": "string"
+								},
+								"required": {
+									"type": "boolean"
+								},
+								"description": {
+									"type": "string"
+								},
+								"default": {}
+							}
+						}
+					}
+				}
+			},
+			"examples": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"required": [
+						"name",
+						"description",
+						"configuration"
+					],
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"description": {
+							"type": "string"
+						},
+						"configuration": {
+							"type": "object"
+						}
+					}
+				}
+			}
+		}
+	},
+	"examples": [
+		{
+			"name": "Get TRANS schema",
+			"input": {
+				"typeId": "TRANS"
+			},
+			"output": {
+				"typeId": "TRANS",
+				"category": "General",
+				"displayName": "Transformation",
+				"description": "Execute a transformation as part of this job workflow",
+				"tags": [
+					"workflow",
+					"orchestration",
+					"etl"
+				],
+				"schema": {
+					"fields": [
+						{
+							"name": "filename",
+							"type": "string",
+							"required": true,
+							"description": "Path to transformation file (.ktr)"
+						},
+						{
+							"name": "wait_until_finished",
+							"type": "boolean",
+							"required": false,
+							"description": "Wait for transformation to complete before proceeding"
+						}
+					]
+				}
+			}
+		}
+	],
+	"errorCases": [
+		{
+			"name": "Unknown job entry type",
+			"input": {
+				"typeId": "NonExistentEntry"
+			},
+			"expectedError": "Unknown job entry type: NonExistentEntry"
+		}
+	]
+}

@@ -1,0 +1,187 @@
+{
+	"toolName": "get_step_type_schema",
+	"description": "Get the detailed configuration schema for a specific step type, including field definitions, types, requirements, and optional examples.",
+	"inputSchema": {
+		"type": "object",
+		"required": [
+			"typeId"
+		],
+		"properties": {
+			"typeId": {
+				"type": "string",
+				"description": "Step type identifier (e.g., 'TableInput', 'SelectValues')"
+			}
+		}
+	},
+	"outputSchema": {
+		"type": "object",
+		"required": [
+			"typeId",
+			"category",
+			"displayName",
+			"description",
+			"tags",
+			"schema"
+		],
+		"properties": {
+			"typeId": {
+				"type": "string",
+				"description": "Step type identifier"
+			},
+			"category": {
+				"type": "string",
+				"description": "Step category"
+			},
+			"displayName": {
+				"type": "string",
+				"description": "Human-readable name"
+			},
+			"description": {
+				"type": "string",
+				"description": "Step description"
+			},
+			"tags": {
+				"type": "array",
+				"items": {
+					"type": "string"
+				},
+				"description": "Use case tags"
+			},
+			"schema": {
+				"type": "object",
+				"required": [
+					"fields"
+				],
+				"properties": {
+					"fields": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": [
+								"name",
+								"type",
+								"required",
+								"description"
+							],
+							"properties": {
+								"name": {
+									"type": "string",
+									"description": "Field name"
+								},
+								"type": {
+									"type": "string",
+									"description": "Field type (string, number, boolean, object, array)"
+								},
+								"required": {
+									"type": "boolean",
+									"description": "Whether field is required"
+								},
+								"description": {
+									"type": "string",
+									"description": "Field description"
+								},
+								"default": {
+									"description": "Default value if applicable"
+								}
+							}
+						}
+					}
+				}
+			},
+			"examples": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"required": [
+						"name",
+						"description",
+						"configuration"
+					],
+					"properties": {
+						"name": {
+							"type": "string",
+							"description": "Example name"
+						},
+						"description": {
+							"type": "string",
+							"description": "What this example demonstrates"
+						},
+						"configuration": {
+							"type": "object",
+							"description": "Valid configuration object"
+						}
+					}
+				},
+				"description": "Optional example configurations"
+			}
+		}
+	},
+	"examples": [
+		{
+			"name": "Get TableInput schema",
+			"input": {
+				"typeId": "TableInput"
+			},
+			"output": {
+				"typeId": "TableInput",
+				"category": "Input",
+				"displayName": "Table Input",
+				"description": "Read data from a database table using SQL queries. Supports all JDBC-compatible databases.",
+				"tags": [
+					"database",
+					"sql",
+					"read",
+					"input"
+				],
+				"schema": {
+					"fields": [
+						{
+							"name": "connection",
+							"type": "string",
+							"required": true,
+							"description": "Database connection name"
+						},
+						{
+							"name": "sql",
+							"type": "string",
+							"required": true,
+							"description": "SQL query to execute"
+						},
+						{
+							"name": "limit",
+							"type": "number",
+							"required": false,
+							"description": "Maximum number of rows to return"
+						},
+						{
+							"name": "variables",
+							"type": "boolean",
+							"required": false,
+							"description": "Enable variable substitution"
+						}
+					]
+				},
+				"examples": [
+					{
+						"name": "Read from MySQL",
+						"description": "Reads all records from a MySQL users table",
+						"configuration": {
+							"connection": "mysql-prod",
+							"sql": "SELECT * FROM users",
+							"limit": 1000
+						}
+					}
+				]
+			}
+		}
+	],
+	"errorCases": [
+		{
+			"name": "Unknown step type",
+			"input": {
+				"typeId": "NonExistentStep"
+			},
+			"expectedError": "Unknown step type: NonExistentStep"
+		}
+	]
+}

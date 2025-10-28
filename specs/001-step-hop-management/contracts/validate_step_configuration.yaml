@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: Validate Step Configuration
+  version: 1.0.0
+  description: API contract for validating a step configuration before adding/updating
+paths:
+  /validate_step_configuration:
+    post:
+      summary: Validate a step configuration for a given type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Step type
+                configuration:
+                  type: object
+                  description: Step configuration object
+              required:
+                - type
+                - configuration
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                  errors:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Input error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                  error:
+                    type: string
+                  details:
+                    type: object
