@@ -1,0 +1,81 @@
+{
+	"toolName": "list_job_entry_types",
+	"description": "List all available job entry types with metadata including categories, descriptions, and use case tags. Supports optional filtering by category.",
+	"inputSchema": {
+		"type": "object",
+		"properties": {
+			"categoryFilter": {
+				"type": "string",
+				"description": "Optional category filter. Common values: General, File Management, Mail, Scripting, Bulk Loading"
+			}
+		}
+	},
+	"outputSchema": {
+		"type": "array",
+		"items": {
+			"type": "object",
+			"required": [
+				"typeId",
+				"category",
+				"displayName",
+				"description",
+				"tags"
+			],
+			"properties": {
+				"typeId": {
+					"type": "string",
+					"description": "Unique job entry type identifier (e.g., 'JOB', 'TRANS')"
+				},
+				"category": {
+					"type": "string",
+					"description": "Job entry category"
+				},
+				"displayName": {
+					"type": "string",
+					"description": "Human-readable job entry type name"
+				},
+				"description": {
+					"type": "string",
+					"description": "Clear description of what this job entry does"
+				},
+				"tags": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Use case tags for semantic discovery"
+				}
+			}
+		}
+	},
+	"examples": [
+		{
+			"name": "List all job entry types",
+			"input": {},
+			"output": [
+				{
+					"typeId": "JOB",
+					"category": "General",
+					"displayName": "Job",
+					"description": "Execute another job as a sub-job within this job workflow",
+					"tags": [
+						"workflow",
+						"orchestration",
+						"nested"
+					]
+				},
+				{
+					"typeId": "TRANS",
+					"category": "General",
+					"displayName": "Transformation",
+					"description": "Execute a transformation as part of this job workflow",
+					"tags": [
+						"workflow",
+						"orchestration",
+						"etl"
+					]
+				}
+			]
+		}
+	]
+}

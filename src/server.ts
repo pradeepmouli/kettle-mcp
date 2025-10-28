@@ -35,6 +35,7 @@ import {
 	validateJobFile,
 	validateTransformationFile,
 } from './handlers/index.js';
+import { listJobEntryTypesTool, listStepTypesTool } from './tools/discovery_tools.js';
 
 /**
  * Available MCP tools for Kettle operations
@@ -100,18 +101,36 @@ const KETTLE_TOOLS: Tool[] = [
 	},
 	{
 		name: 'list_kettle_steps',
-		description: 'List available Kettle step types for transformations',
+		description: 'List available Kettle step types for transformations with optional category and tag filtering',
 		inputSchema: {
 			type: 'object',
-			properties: {},
+			properties: {
+				category: {
+					type: 'string',
+					description: 'Filter by step category (Input, Output, Transform, etc.)',
+				},
+				tag: {
+					type: 'string',
+					description: 'Filter by tag (database, csv, json, transform, etc.)',
+				},
+			},
 		},
 	},
 	{
 		name: 'list_kettle_job_entries',
-		description: 'List available Kettle job entry types',
+		description: 'List available Kettle job entry types with optional filtering by category or tag',
 		inputSchema: {
 			type: 'object',
-			properties: {},
+			properties: {
+				category: {
+					type: 'string',
+					description: 'Filter by job entry category (e.g., "General")',
+				},
+				tag: {
+					type: 'string',
+					description: 'Filter by tag (e.g., "workflow", "orchestration", "etl")',
+				},
+			},
 		},
 	},
 	{
@@ -244,10 +263,24 @@ export function registerTools(server: Server): void {
 				}
 
 			case 'list_kettle_steps':
-				return { content: [{ type: 'text', text: 'Available Kettle step types: (to be implemented)' }] };
+				try {
+					const category = args?.category as string | undefined;
+					const tag = args?.tag as string | undefined;
+					const res = await listStepTypesTool(category, tag);
+					return { content: [{ type: 'json', json: res }] } as any;
+				} catch (err: any) {
+					return { content: [{ type: 'json', json: { error: err?.message || String(err) } }] } as any;
+				}
 
 			case 'list_kettle_job_entries':
-				return { content: [{ type: 'text', text: 'Available Kettle job entry types: (to be implemented)' }] };
+				try {
+					const category = args?.category as string | undefined;
+					const tag = args?.tag as string | undefined;
+					const res = await listJobEntryTypesTool(category, tag);
+					return { content: [{ type: 'json', json: res }] } as any;
+				} catch (err: any) {
+					return { content: [{ type: 'json', json: { error: err?.message || String(err) } }] } as any;
+				}
 
 			case 'search_kettle_artifacts':
 				try {

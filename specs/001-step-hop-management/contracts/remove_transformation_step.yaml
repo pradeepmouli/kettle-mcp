@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: Remove Transformation Step
+  version: 1.0.0
+  description: API contract for removing a step (and its hops) from a Kettle transformation
+paths:
+  /remove_transformation_step:
+    post:
+      summary: Remove a step and all connected hops
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                  description: Absolute path to the .ktr file
+                name:
+                  type: string
+                  description: Step name to remove
+              required:
+                - filePath
+                - name
+      responses:
+        '200':
+          description: Step and hops removed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  transformation:
+                    type: object
+                  warnings:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Validation or input error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  details:
+                    type: object

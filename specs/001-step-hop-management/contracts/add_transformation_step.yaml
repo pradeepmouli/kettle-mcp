@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: Add Transformation Step
+  version: 1.0.0
+  description: API contract for adding a step to a Kettle transformation
+paths:
+  /add_transformation_step:
+    post:
+      summary: Add a new step to a transformation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                  description: Absolute path to the .ktr file
+                name:
+                  type: string
+                  description: Step name (unique within transformation)
+                type:
+                  type: string
+                  description: Step type (must match known type)
+                configuration:
+                  type: object
+                  description: Step configuration (per type schema)
+                xloc:
+                  type: integer
+                  minimum: 0
+                  maximum: 9999
+                  description: X coordinate for GUI
+                yloc:
+                  type: integer
+                  minimum: 0
+                  maximum: 9999
+                  description: Y coordinate for GUI
+              required:
+                - filePath
+                - name
+                - type
+                - configuration
+      responses:
+        '200':
+          description: Step added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  transformation:
+                    type: object
+                  warnings:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Validation or input error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  details:
+                    type: object
