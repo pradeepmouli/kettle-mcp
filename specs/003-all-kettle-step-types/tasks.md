@@ -88,57 +88,57 @@ Single project structure at repository root: `src/`, `tests/`
 
 **Database Input Steps (8 types)** - All can be done in parallel
 
-- [ ] T008 [P] [US1] Add MySQLBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts (schema, 2 examples, tags)
-- [ ] T009 [P] [US1] Add PostgreSQLBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T010 [P] [US1] Add OracleBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T011 [P] [US1] Add SQLServerBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T012 [P] [US1] Add MonetDBBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T013 [P] [US1] Add VerticaBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T014 [P] [US1] Add DatabaseJoin step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T015 [P] [US1] Add GetTableNames step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T008 [P] [US1] Add MySQLBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts (schema, 2 examples, tags)
+- [x] T009 [P] [US1] Add PostgreSQLBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T010 [P] [US1] Add OracleBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T011 [P] [US1] Add SQLServerBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T012 [P] [US1] Add MonetDBBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T013 [P] [US1] Add VerticaBulkLoader step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T014 [P] [US1] Add DatabaseJoin step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T015 [P] [US1] Add GetTableNames step type to src/kettle/schemas/transformations/stepTypes/input.ts
 
 **File Input Steps (7 types)** - All can be done in parallel
 
-- [ ] T016 [P] [US1] Add CSVInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T017 [P] [US1] Add FixedFileInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T018 [P] [US1] Add AccessInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T019 [P] [US1] Add PropertyInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T020 [P] [US1] Add LDIFInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T021 [P] [US1] Add YAMLInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T022 [P] [US1] Add ParquetInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T016 [P] [US1] Add CSVInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T017 [P] [US1] Add FixedFileInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T018 [P] [US1] Add AccessInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T019 [P] [US1] Add PropertyInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T020 [P] [US1] Add LDIFInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T021 [P] [US1] Add YAMLInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T022 [P] [US1] Add ParquetInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
 
 **Streaming Input Steps (4 types)** - All can be done in parallel
 
-- [ ] T023 [P] [US1] Add KafkaConsumer step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T024 [P] [US1] Add JMSInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T025 [P] [US1] Add MQInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T026 [P] [US1] Add MQTTSubscriber step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T023 [P] [US1] Add KafkaConsumer step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T024 [P] [US1] Add JMSInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T025 [P] [US1] Add MQInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T026 [P] [US1] Add MQTTSubscriber step type to src/kettle/schemas/transformations/stepTypes/input.ts
 
 **Web Service Input Steps (3 types)** - All can be done in parallel
 
-- [ ] T027 [P] [US1] Add SOAPInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T028 [P] [US1] Add HTTPClient step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T029 [P] [US1] Add WebServiceLookup step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T027 [P] [US1] Add SOAPInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T028 [P] [US1] Add HTTPClient step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T029 [P] [US1] Add WebServiceLookup step type to src/kettle/schemas/transformations/stepTypes/input.ts
 
 **Cloud/NoSQL Input Steps (5 types)** - All can be done in parallel
 
-- [ ] T030 [P] [US1] Add S3CSVInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T031 [P] [US1] Add MongoDbInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T032 [P] [US1] Add CassandraInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T033 [P] [US1] Add ElasticsearchInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T034 [P] [US1] Add SalesforceInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T030 [P] [US1] Add S3CSVInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T031 [P] [US1] Add MongoDbInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T032 [P] [US1] Add CassandraInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T033 [P] [US1] Add ElasticsearchInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T034 [P] [US1] Add SalesforceInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
 
 **Other Input Steps (3 types)** - All can be done in parallel
 
-- [ ] T035 [P] [US1] Add GetXMLData step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T036 [P] [US1] Add RSSInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
-- [ ] T037 [P] [US1] Add LDAPInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T035 [P] [US1] Add GetXMLData step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T036 [P] [US1] Add RSSInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
+- [x] T037 [P] [US1] Add LDAPInput step type to src/kettle/schemas/transformations/stepTypes/input.ts
 
 ### Validation for US1
 
-- [ ] T038 [US1] Update tests/contract/step_type_discovery.test.ts to verify all 30 input step types are discoverable
-- [ ] T039 [US1] Update tests/integration/discovery_workflow.test.ts to test filtering by Input category (should return 35+ types now)
-- [ ] T040 [US1] Run npm test to verify all tests pass and coverage remains above 75%
+- [x] T038 [US1] Update tests/contract/step_type_discovery.test.ts to verify all 30 input step types are discoverable
+- [x] T039 [US1] Update tests/integration/discovery_workflow.test.ts to test filtering by Input category (should return 35+ types now)
+- [x] T040 [US1] Run npm test to verify all tests pass and coverage remains above 75%
 
 **Checkpoint**: ✅ COMPLETE - LLMs can discover 35+ input step types (5 existing + 30 new) with rich metadata and filter by category. MVP Checkpoint 1/3.
 
