@@ -30,6 +30,30 @@ describe('Discovery Tools Contract Tests', () => {
 				expect(step.category).toBe('Input');
 			});
 		});
+
+		// T038: Verify all 30 Phase 3 input step types are discoverable
+		it('should discover all Phase 3 input step types (35+ total)', async () => {
+			const inputSteps = await listStepTypesTool('Input');
+
+			// Should have at least 35 input types (5 existing + 30 from Phase 3)
+			expect(inputSteps.length).toBeGreaterThanOrEqual(35);
+
+			// Verify all Phase 3 step types are present
+			const phase3StepTypes = [
+				'MySQLBulkLoader', 'PostgreSQLBulkLoader', 'OracleBulkLoader', 'SQLServerBulkLoader',
+				'MonetDBBulkLoader', 'VerticaBulkLoader', 'DatabaseJoin', 'GetTableNames',
+				'CSVInput', 'FixedFileInput', 'AccessInput', 'PropertyInput', 'LDIFInput', 
+				'YAMLInput', 'ParquetInput', 'KafkaConsumer', 'JMSInput', 'MQInput', 
+				'MQTTSubscriber', 'SOAPInput', 'HTTPClient', 'WebServiceLookup',
+				'S3CSVInput', 'MongoDbInput', 'CassandraInput', 'ElasticsearchInput', 
+				'SalesforceInput', 'GetXMLData', 'RSSInput', 'LDAPInput'
+			];
+
+			const foundStepTypes = inputSteps.map(s => s.typeId);
+			phase3StepTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+		});
 	});
 
 	describe('getStepTypeSchematool', () => {
