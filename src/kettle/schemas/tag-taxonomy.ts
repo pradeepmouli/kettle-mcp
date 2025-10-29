@@ -22,6 +22,7 @@ export const DATA_SOURCE_TAGS = {
 	WEB_SERVICE: 'web-service',
 	KAFKA: 'kafka',
 	TEXT: 'text',
+	LDIF: 'ldif',
 } as const;
 
 /**
@@ -76,12 +77,90 @@ export const DOMAIN_TAGS = {
 } as const;
 
 /**
+ * Technology Tags - Specific databases, platforms, and protocols
+ */
+export const TECHNOLOGY_TAGS = {
+	MYSQL: 'mysql',
+	POSTGRESQL: 'postgresql',
+	ORACLE: 'oracle',
+	SQLSERVER: 'sqlserver',
+	MONGODB: 'mongodb',
+	CASSANDRA: 'cassandra',
+	ELASTICSEARCH: 'elasticsearch',
+	JMS: 'jms',
+	MQTT: 'mqtt',
+	HADOOP: 'hadoop',
+	SPARK: 'spark',
+	HDFS: 'hdfs',
+	HBASE: 'hbase',
+	S3: 's3',
+	AZURE: 'azure',
+	GCP: 'gcp',
+	REST: 'rest',
+	SOAP: 'soap',
+	LDAP: 'ldap',
+	FTP: 'ftp',
+	SFTP: 'sftp',
+} as const;
+
+/**
+ * Quality and Processing Tags
+ */
+export const QUALITY_TAGS = {
+	QUALITY: 'quality',
+	CHECKSUM: 'checksum',
+	DEDUPLICATION: 'deduplication',
+	CLEANSING: 'cleansing',
+	PROFILING: 'profiling',
+	SAMPLING: 'sampling',
+	PERFORMANCE: 'performance',
+	BULK: 'bulk',
+	ENTERPRISE: 'enterprise',
+	ANALYTICS: 'analytics',
+	DISTRIBUTED: 'distributed',
+	DOCUMENT: 'document',
+	SEARCH: 'search',
+	CRM: 'crm',
+	SALESFORCE: 'salesforce',
+	AWS: 'aws',
+	CLOUD: 'cloud',
+	COLUMNAR: 'columnar',
+	BIGDATA: 'bigdata',
+	REALTIME: 'realtime',
+	EVENTS: 'events',
+	QUEUE: 'queue',
+	MESSAGING: 'messaging',
+	IOT: 'iot',
+	TELEMETRY: 'telemetry',
+	DIRECTORY: 'directory',
+	AUTHENTICATION: 'authentication',
+	USERS: 'users',
+	FEED: 'feed',
+	WEB: 'web',
+	PARSE: 'parse',
+	XPATH: 'xpath',
+	MAINFRAME: 'mainframe',
+	LEGACY: 'legacy',
+	MICROSOFT: 'microsoft',
+	ACCESS: 'access',
+	PROPERTIES: 'properties',
+	CONFIGURATION: 'configuration',
+	PARQUET: 'parquet',
+	YAML: 'yaml',
+	SCHEMA: 'schema',
+	DISCOVERY: 'discovery',
+	METADATA: 'metadata',
+} as const;
+
+/**
  * All available tags combined
  */
 export const ALL_TAGS = {
 	...DATA_SOURCE_TAGS,
 	...OPERATION_TAGS,
 	...DOMAIN_TAGS,
+	...TECHNOLOGY_TAGS,
+	...QUALITY_TAGS,
 } as const;
 
 /**

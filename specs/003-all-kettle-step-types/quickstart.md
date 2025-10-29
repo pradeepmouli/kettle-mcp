@@ -1,7 +1,7 @@
 # Quickstart: Adding New Step Types
 
-**Feature**: 003-all-kettle-step-types  
-**Audience**: Contributors adding new Kettle step type definitions  
+**Feature**: 003-all-kettle-step-types
+**Audience**: Contributors adding new Kettle step type definitions
 **Time**: 15-30 minutes per step type
 
 ---
@@ -63,26 +63,26 @@ const mysqlBulkLoaderConfigSchema = z.object({
   connection: z.string()
     .min(1)
     .describe('Database connection name'),
-  
+
   schema: z.string()
     .optional()
     .describe('Database schema (optional)'),
-  
+
   table: z.string()
     .min(1)
     .describe('Target table name'),
-  
+
   truncate: z.boolean()
     .default(false)
     .describe('Truncate table before loading'),
-  
+
   fields: z.array(z.object({
     stream: z.string().describe('Field name in data stream'),
     table: z.string().describe('Column name in target table'),
   }))
     .min(1)
     .describe('Field mappings between stream and table'),
-  
+
   bulkSize: z.number()
     .min(1)
     .default(1000)
@@ -208,7 +208,7 @@ Add to the category's STEPS registry object:
 ```typescript
 export const INPUT_STEPS: Record<string, StepType> = {
   // ... existing steps ...
-  
+
   MySQLBulkLoader: {
     typeId: 'MySQLBulkLoader',
     category: StepCategory.INPUT,
@@ -218,7 +218,7 @@ export const INPUT_STEPS: Record<string, StepType> = {
     configurationSchema: mysqlBulkLoaderConfigSchema,
     examples: [/* examples from step 6 */],
   },
-  
+
   // ... more steps ...
 };
 ```
@@ -354,6 +354,7 @@ const fieldMappingSchema = z.array(z.object({
 **Problem**: Example configuration doesn't match schema
 
 **Solution**: Validate example manually:
+
 ```typescript
 const result = mysqlBulkLoaderConfigSchema.safeParse(exampleConfig);
 if (!result.success) {
@@ -365,7 +366,7 @@ if (!result.success) {
 
 **Problem**: Used custom tag not in `TAG_TAXONOMY`
 
-**Solution**: 
+**Solution**:
 1. Check `src/utils/tag-taxonomy.ts` for existing tag
 2. If needed, add new tag to taxonomy first
 3. Use existing tag if close enough (prefer reuse)

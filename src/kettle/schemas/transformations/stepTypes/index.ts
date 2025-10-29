@@ -8,15 +8,27 @@
  * - Support lazy loading if needed in the future
  */
 
+export * from './bigdata.js';
+export * from './flow.js';
 export * from './input.js';
+export * from './lookup.js';
 export * from './output.js';
+export * from './scripting.js';
 export * from './transform.js';
 export * from './types.js';
+export * from './utility.js';
+export * from './validation.js';
 
+import { BIGDATA_STEPS } from './bigdata.js';
+import { FLOW_STEPS } from './flow.js';
 import { INPUT_STEPS } from './input.js';
+import { LOOKUP_STEPS } from './lookup.js';
 import { OUTPUT_STEPS } from './output.js';
+import { SCRIPTING_STEPS } from './scripting.js';
 import { TRANSFORM_STEPS } from './transform.js';
 import type { StepCategory, StepType } from './types.js';
+import { UTILITY_STEPS } from './utility.js';
+import { VALIDATION_STEPS } from './validation.js';
 
 /**
  * Combined registry of all step types across all categories
@@ -25,6 +37,12 @@ export const STEP_TYPE_REGISTRY: Record<string, StepType> = {
 	...INPUT_STEPS,
 	...OUTPUT_STEPS,
 	...TRANSFORM_STEPS,
+	...LOOKUP_STEPS,
+	...FLOW_STEPS,
+	...SCRIPTING_STEPS,
+	...UTILITY_STEPS,
+	...BIGDATA_STEPS,
+	...VALIDATION_STEPS,
 };
 
 /**
