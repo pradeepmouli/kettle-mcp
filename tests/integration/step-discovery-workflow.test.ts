@@ -38,7 +38,7 @@ describe('Step Type Discovery Workflow', () => {
 
 		// Step 4: Discover output steps
 		const outputSteps = await listStepTypesTool('Output');
-		expect(outputSteps.length).toBeGreaterThan(0);
+		expect(outputSteps.length).toBeGreaterThanOrEqual(23); // T105: Should have 23+ output types after Phase 5
 
 		// Step 5: Find CSV output step by tags
 		const csvOutputStep = outputSteps.find((s) =>
