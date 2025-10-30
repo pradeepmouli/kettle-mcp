@@ -428,4 +428,101 @@ describe('Step Type Discovery Workflow', () => {
 		expect(apiConfig.url).toBeTruthy();
 		expect(apiConfig.method).toBeTruthy();
 	});
+
+	// T146: Integration test for Phase 7 - Lookup category filtering
+	it('should enable LLM to discover and use lookup steps for data enrichment', async () => {
+		// Scenario: LLM needs to enrich order data with customer information
+
+		// Step 1: Discover all lookup steps
+		const lookupSteps = await listStepTypesTool('Lookup');
+		expect(lookupSteps.length).toBeGreaterThanOrEqual(5);
+
+		// Step 2: Find stream lookup for in-memory enrichment
+		const streamLookup = lookupSteps.find((s) => s.typeId === 'StreamLookup');
+		expect(streamLookup).toBeDefined();
+		expect(streamLookup?.tags).toContain('lookup');
+		expect(streamLookup?.description).toContain('Perform');
+
+		// Step 3: Get detailed schema for stream lookup
+		const streamSchema = await getStepTypeSchematool('StreamLookup');
+		expect(streamSchema.schema.fields).toBeInstanceOf(Array);
+
+		// Verify key configuration fields
+		const lookupStreamField = streamSchema.schema.fields.find((f: any) => f.name === 'lookupStream');
+		expect(lookupStreamField).toBeDefined();
+		expect(lookupStreamField?.required).toBe(true);
+
+		const keysField = streamSchema.schema.fields.find((f: any) => f.name === 'keys');
+		expect(keysField).toBeDefined();
+		expect(keysField?.required).toBe(true);
+
+		// Step 4: Verify examples are provided
+		expect(streamSchema.examples).toBeDefined();
+		expect(streamSchema.examples!.length).toBeGreaterThanOrEqual(2);
+
+		// Step 5: Find database lookup for database-backed enrichment
+		const dbLookup = lookupSteps.find((s) => s.typeId === 'DatabaseLookup');
+		expect(dbLookup).toBeDefined();
+		expect(dbLookup?.tags).toContain('database');
+
+		// Step 6: Find fuzzy match for deduplication
+		const fuzzyMatch = lookupSteps.find((s) => s.typeId === 'FuzzyMatch');
+		expect(fuzzyMatch).toBeDefined();
+		expect(fuzzyMatch?.tags).toContain('deduplication');
+
+		// Step 7: Verify dimension lookup for warehouse operations
+		const dimLookup = lookupSteps.find((s) => s.typeId === 'DimensionLookup');
+		expect(dimLookup).toBeDefined();
+		expect(dimLookup?.tags).toContain('analytics');
+	});
+
+	// T146: Integration test for Phase 7 - Join category filtering
+	it('should enable LLM to discover and use join steps for combining data streams', async () => {
+		// Scenario: LLM needs to merge data from different sources
+
+		// Step 1: Discover all join steps (both Join category and join-related Transform steps)
+		const joinSteps = await listStepTypesTool('Join');
+		expect(joinSteps.length).toBeGreaterThanOrEqual(2);
+
+		// Step 2: Find MergeRows for change detection
+		const mergeRows = joinSteps.find((s) => s.typeId === 'MergeRows');
+		expect(mergeRows).toBeDefined();
+		expect(mergeRows?.tags).toContain('join');
+		expect(mergeRows?.description).toContain('Compare');
+
+		// Step 3: Get schema for MergeRows
+		const mergeSchema = await getStepTypeSchematool('MergeRows');
+		expect(mergeSchema.schema.fields).toBeInstanceOf(Array);
+
+		// Verify CDC-related fields
+		const referenceStreamField = mergeSchema.schema.fields.find((f: any) => f.name === 'referenceStream');
+		expect(referenceStreamField).toBeDefined();
+		expect(referenceStreamField?.required).toBe(true);
+
+		const compareStreamField = mergeSchema.schema.fields.find((f: any) => f.name === 'compareStream');
+		expect(compareStreamField).toBeDefined();
+		expect(compareStreamField?.required).toBe(true);
+
+		// Step 4: Find Append for sequential combination
+		const append = joinSteps.find((s) => s.typeId === 'Append');
+		expect(append).toBeDefined();
+		expect(append?.tags).toContain('join');
+
+		// Step 5: Get schema for Append
+		const appendSchema = await getStepTypeSchematool('Append');
+		expect(appendSchema.schema.fields).toBeInstanceOf(Array);
+
+		// Verify append configuration fields
+		const headStepField = appendSchema.schema.fields.find((f: any) => f.name === 'headStep');
+		expect(headStepField).toBeDefined();
+		expect(headStepField?.required).toBe(true);
+
+		const tailStepField = appendSchema.schema.fields.find((f: any) => f.name === 'tailStep');
+		expect(tailStepField).toBeDefined();
+		expect(tailStepField?.required).toBe(true);
+
+		// Step 6: Verify examples for join operations
+		expect(appendSchema.examples).toBeDefined();
+		expect(appendSchema.examples!.length).toBeGreaterThanOrEqual(2);
+	});
 });
