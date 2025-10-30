@@ -134,6 +134,37 @@ describe('Discovery Tools Contract Tests', () => {
 				expect(step.tags.length).toBeGreaterThanOrEqual(3);
 			});
 		});
+
+		// T158: Verify all Phase 8 validation step types are discoverable
+		it('should discover all Phase 8 validation step types (10 total)', async () => {
+			const validationSteps = await listStepTypesTool('Validation');
+
+			// Should have exactly 10 validation types from Phase 8
+			expect(validationSteps.length).toBeGreaterThanOrEqual(10);
+
+			// Verify all Phase 8 validation step types are present
+			const phase8ValidationTypes = [
+				'DataValidator', 'CheckSum', 'CRC32', 'MD5', 'Coalesce',
+				'DataCleanse', 'DetectEmptyStream', 'FieldValidator', 
+				'Validator', 'DataGrid'
+			];
+
+			const foundStepTypes = validationSteps.map(s => s.typeId);
+			phase8ValidationTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+
+			// Verify all validation steps have proper metadata
+			validationSteps.forEach(step => {
+				expect(step).toHaveProperty('typeId');
+				expect(step).toHaveProperty('category', 'Validation');
+				expect(step).toHaveProperty('displayName');
+				expect(step).toHaveProperty('description');
+				expect(step.description.length).toBeGreaterThan(50);
+				expect(step).toHaveProperty('tags');
+				expect(step.tags.length).toBeGreaterThanOrEqual(3);
+			});
+		});
 	});
 
 	describe('getStepTypeSchematool', () => {
