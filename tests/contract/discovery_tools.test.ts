@@ -54,6 +54,29 @@ describe('Discovery Tools Contract Tests', () => {
 				expect(foundStepTypes).toContain(expectedType);
 			});
 		});
+
+		// T104: Verify all 20 Phase 5 output step types are discoverable
+		it('should discover all Phase 5 output step types (23+ total)', async () => {
+			const outputSteps = await listStepTypesTool('Output');
+
+			// Should have at least 23 output types (3 existing + 20 from Phase 5)
+			expect(outputSteps.length).toBeGreaterThanOrEqual(23);
+
+			// Verify all Phase 5 step types are present
+			const phase5StepTypes = [
+				'InsertUpdate', 'Update', 'Delete', 'SynchronizeAfterMerge',
+				'MySQLBulkLoader', 'PostgreSQLBulkLoader',
+				'ExcelOutput', 'AccessOutput', 'PropertyOutput', 'ParquetOutput',
+				'XMLOutput', 'YAMLOutput',
+				'KafkaProducer', 'JMSOutput', 'MQOutput', 'MQTTPublisher',
+				'S3CSVOutput', 'MongoDbOutput', 'CassandraOutput', 'ElasticsearchBulkInsert'
+			];
+
+			const foundStepTypes = outputSteps.map(s => s.typeId);
+			phase5StepTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+		});
 	});
 
 	describe('getStepTypeSchematool', () => {
