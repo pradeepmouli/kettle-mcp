@@ -77,6 +77,63 @@ describe('Discovery Tools Contract Tests', () => {
 				expect(foundStepTypes).toContain(expectedType);
 			});
 		});
+
+		// T145: Verify all Phase 7 lookup step types are discoverable
+		it('should discover all Phase 7 lookup step types (5 total)', async () => {
+			const lookupSteps = await listStepTypesTool('Lookup');
+
+			// Should have at least 5 lookup types from Phase 7
+			expect(lookupSteps.length).toBeGreaterThanOrEqual(5);
+
+			// Verify all Phase 7 lookup step types are present
+			const phase7LookupTypes = [
+				'StreamLookup', 'DatabaseLookup', 'FuzzyMatch', 
+				'DimensionLookup', 'CombinationLookup'
+			];
+
+			const foundStepTypes = lookupSteps.map(s => s.typeId);
+			phase7LookupTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+
+			// Verify all lookup steps have proper metadata
+			lookupSteps.forEach(step => {
+				expect(step).toHaveProperty('typeId');
+				expect(step).toHaveProperty('category', 'Lookup');
+				expect(step).toHaveProperty('displayName');
+				expect(step).toHaveProperty('description');
+				expect(step.description.length).toBeGreaterThan(50);
+				expect(step).toHaveProperty('tags');
+				expect(step.tags.length).toBeGreaterThanOrEqual(3);
+			});
+		});
+
+		// T145: Verify all Phase 7 join step types are discoverable
+		it('should discover all Phase 7 join step types (2+ total)', async () => {
+			const joinSteps = await listStepTypesTool('Join');
+
+			// Should have at least 2 join types from Phase 7
+			expect(joinSteps.length).toBeGreaterThanOrEqual(2);
+
+			// Verify Phase 7 join step types are present
+			const phase7JoinTypes = ['MergeRows', 'Append'];
+
+			const foundStepTypes = joinSteps.map(s => s.typeId);
+			phase7JoinTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+
+			// Verify all join steps have proper metadata
+			joinSteps.forEach(step => {
+				expect(step).toHaveProperty('typeId');
+				expect(step).toHaveProperty('category', 'Join');
+				expect(step).toHaveProperty('displayName');
+				expect(step).toHaveProperty('description');
+				expect(step.description.length).toBeGreaterThan(50);
+				expect(step).toHaveProperty('tags');
+				expect(step.tags.length).toBeGreaterThanOrEqual(3);
+			});
+		});
 	});
 
 	describe('getStepTypeSchematool', () => {
