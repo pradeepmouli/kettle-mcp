@@ -9,12 +9,14 @@ Kettle-MCP enables AI agents and applications to read, create, modify, and valid
 ### Key Features
 
 - **🔍 Discovery Tools**: List and explore available step types and job entry types with schemas
+- **📚 Comprehensive Step Library**: 132+ step types across 7 categories (Input, Transform, Output, BigData, Validation, Lookup, Join)
+- **☁️ Big Data & Cloud**: Full support for Hadoop, HDFS, HBase, S3, Azure, Salesforce, and modern data platforms
 - **✅ Validation**: Validate transformation steps and job entries against their schemas
 - **➕ Creation**: Add new steps, job entries, and hops with configuration validation
 - **✏️ Modification**: Update existing transformations and jobs with atomic writes
 - **🗑️ Deletion**: Remove steps/entries with automatic hop cleanup
 - **🔒 Safety**: Automatic backups, diff generation, and atomic file operations
-- **📊 Full Coverage**: 16 MCP tools, 135 tests, 75% code coverage
+- **📊 Full Coverage**: 16 MCP tools, 210+ tests, 75% code coverage
 
 ## Quick Start
 
@@ -79,6 +81,34 @@ Add to your MCP client configuration (e.g., Claude Desktop):
 - **`kettle_update_job_entry`** - Update an existing job entry's configuration or position
 - **`kettle_remove_job_entry`** - Remove a job entry (auto-removes connected hops)
 - **`kettle_remove_job_hop`** - Remove a specific hop
+
+## Step Type Library
+
+Kettle-MCP provides comprehensive coverage of Pentaho Kettle step types, enabling AI agents to build complete ETL workflows.
+
+### Coverage Summary
+
+| Category | Count | Examples |
+|----------|-------|----------|
+| **Input** | 33 | TableInput, CSVInput, KafkaConsumer, MongoDbInput, S3CSVInput |
+| **Transform** | 44 | SelectValues, FilterRows, Joiner, GroupBy, Calculator |
+| **Output** | 23 | TableOutput, TextFileOutput, KafkaProducer, ElasticsearchBulkInsert |
+| **BigData** | 15 | HadoopFileInput, HDFSFileOutput, HBaseInput, S3FileInput, AvroOutput |
+| **Validation** | 10 | DataValidator, CheckSum, DataCleanse, FieldValidator |
+| **Lookup** | 5 | StreamLookup, DatabaseLookup, FuzzyMatch, DimensionLookup |
+| **Join** | 2 | MergeRows, Append |
+| **Total** | **132** | |
+
+### Supported Technologies
+
+- **Databases**: MySQL, PostgreSQL, Oracle, SQL Server, MonetDB, Vertica
+- **NoSQL**: MongoDB, Cassandra, Elasticsearch, HBase
+- **Big Data**: Hadoop, HDFS, Spark, Avro, Parquet, ORC
+- **Cloud**: AWS S3, Azure Event Hubs, Google Analytics, Salesforce
+- **Streaming**: Kafka, JMS, MQTT, Azure Event Hubs
+- **File Formats**: CSV, JSON, XML, Excel, Parquet, Avro, YAML, Fixed-width
+
+For complete step type documentation, see [docs/step-type-coverage.md](docs/step-type-coverage.md).
 
 ## Usage Examples
 
