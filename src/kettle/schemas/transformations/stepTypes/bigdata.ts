@@ -87,8 +87,8 @@ const hbaseOutputConfigSchema = z.object({
  * Configuration schema for S3 File Input step
  */
 const s3FileInputConfigSchema = z.object({
-	awsAccessKey: z.string().describe('AWS access key ID'),
-	awsSecretKey: z.string().describe('AWS secret access key'),
+	awsAccessKey: z.string().describe('AWS access key ID (use environment variables in production)'),
+	awsSecretKey: z.string().describe('AWS secret access key (use environment variables in production)'),
 	bucket: z.string().describe('S3 bucket name'),
 	key: z.string().describe('S3 object key or pattern'),
 	region: z.string().default('us-east-1').describe('AWS region'),
@@ -103,8 +103,8 @@ const s3FileInputConfigSchema = z.object({
  * Configuration schema for S3 File Output step
  */
 const s3FileOutputConfigSchema = z.object({
-	awsAccessKey: z.string().describe('AWS access key ID'),
-	awsSecretKey: z.string().describe('AWS secret access key'),
+	awsAccessKey: z.string().describe('AWS access key ID (use environment variables in production)'),
+	awsSecretKey: z.string().describe('AWS secret access key (use environment variables in production)'),
 	bucket: z.string().describe('S3 bucket name'),
 	key: z.string().describe('S3 object key'),
 	region: z.string().default('us-east-1').describe('AWS region'),
@@ -436,8 +436,8 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Read JSON from S3',
 				description: 'Ingest JSON files from S3 bucket',
 				configuration: {
-					awsAccessKey: 'AKIAIOSFODNN7EXAMPLE',
-					awsSecretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+					awsAccessKey: '${AWS_ACCESS_KEY_ID}',
+					awsSecretKey: '${AWS_SECRET_ACCESS_KEY}',
 					bucket: 'my-data-bucket',
 					key: 'raw-data/events-*.json',
 					region: 'us-east-1',
@@ -453,8 +453,8 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Read Parquet from S3',
 				description: 'Process Parquet files stored in S3',
 				configuration: {
-					awsAccessKey: 'AKIAIOSFODNN7EXAMPLE',
-					awsSecretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+					awsAccessKey: '${AWS_ACCESS_KEY_ID}',
+					awsSecretKey: '${AWS_SECRET_ACCESS_KEY}',
 					bucket: 'analytics-warehouse',
 					key: 'sales/year=2024/month=01/*.parquet',
 					region: 'us-west-2',
@@ -475,8 +475,8 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Write CSV to S3',
 				description: 'Save processed data as CSV in S3',
 				configuration: {
-					awsAccessKey: 'AKIAIOSFODNN7EXAMPLE',
-					awsSecretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+					awsAccessKey: '${AWS_ACCESS_KEY_ID}',
+					awsSecretKey: '${AWS_SECRET_ACCESS_KEY}',
 					bucket: 'output-bucket',
 					key: 'processed/daily_report.csv',
 					region: 'us-east-1',
@@ -489,8 +489,8 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Archive to Glacier',
 				description: 'Write data to S3 Glacier for long-term storage',
 				configuration: {
-					awsAccessKey: 'AKIAIOSFODNN7EXAMPLE',
-					awsSecretKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+					awsAccessKey: '${AWS_ACCESS_KEY_ID}',
+					awsSecretKey: '${AWS_SECRET_ACCESS_KEY}',
 					bucket: 'archive-bucket',
 					key: 'archives/2024/historical_data.parquet',
 					region: 'us-east-1',
@@ -513,7 +513,7 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Consume IoT Events',
 				description: 'Read IoT device telemetry from Event Hubs',
 				configuration: {
-					connectionString: 'Endpoint=sb://myeventhub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=...',
+					connectionString: 'Endpoint=sb://myeventhub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=${EVENTHUB_ACCESS_KEY}',
 					eventHubName: 'iot-telemetry',
 					consumerGroup: '$Default',
 					messageField: 'telemetry_data',
@@ -525,7 +525,7 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Process Application Logs',
 				description: 'Ingest application log events from specific partition',
 				configuration: {
-					connectionString: 'Endpoint=sb://myeventhub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=...',
+					connectionString: 'Endpoint=sb://myeventhub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=${EVENTHUB_ACCESS_KEY}',
 					eventHubName: 'app-logs',
 					consumerGroup: 'log-processor',
 					partitionId: '0',
@@ -546,7 +546,7 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Publish Processed Events',
 				description: 'Send enriched events to Event Hubs',
 				configuration: {
-					connectionString: 'Endpoint=sb://myeventhub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=...',
+					connectionString: 'Endpoint=sb://myeventhub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=${EVENTHUB_ACCESS_KEY}',
 					eventHubName: 'processed-events',
 					messageField: 'event_payload',
 					partitionKeyField: 'customer_id',
@@ -557,7 +557,7 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Stream Analytics Results',
 				description: 'Publish real-time analytics to Event Hubs',
 				configuration: {
-					connectionString: 'Endpoint=sb://myeventhub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=...',
+					connectionString: 'Endpoint=sb://myeventhub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=${EVENTHUB_ACCESS_KEY}',
 					eventHubName: 'analytics-stream',
 					messageField: 'analytics_result',
 					batchSize: 50,
@@ -616,9 +616,9 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Sync Customer Accounts',
 				description: 'Upsert customer account records to Salesforce',
 				configuration: {
-					username: 'user@company.com',
-					password: 'password123',
-					securityToken: 'ABC123xyz',
+					username: '${SALESFORCE_USERNAME}',
+					password: '${SALESFORCE_PASSWORD}',
+					securityToken: '${SALESFORCE_SECURITY_TOKEN}',
 					module: 'Account',
 					externalIdField: 'External_Customer_ID__c',
 					fieldMappings: [
@@ -635,8 +635,8 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Update Lead Information',
 				description: 'Sync marketing leads to Salesforce',
 				configuration: {
-					username: 'user@company.com',
-					password: 'password123',
+					username: '${SALESFORCE_USERNAME}',
+					password: '${SALESFORCE_PASSWORD}',
 					module: 'Lead',
 					externalIdField: 'Lead_Source_ID__c',
 					fieldMappings: [
@@ -663,9 +663,9 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Delete Duplicate Leads',
 				description: 'Remove duplicate lead records from Salesforce',
 				configuration: {
-					username: 'user@company.com',
-					password: 'password123',
-					securityToken: 'ABC123xyz',
+					username: '${SALESFORCE_USERNAME}',
+					password: '${SALESFORCE_PASSWORD}',
+					securityToken: '${SALESFORCE_SECURITY_TOKEN}',
 					module: 'Lead',
 					idField: 'salesforce_id',
 					batchSize: 200,
@@ -676,8 +676,8 @@ export const BIGDATA_STEPS: Record<string, StepType> = {
 				name: 'Clean Up Old Records',
 				description: 'Delete archived contact records',
 				configuration: {
-					username: 'user@company.com',
-					password: 'password123',
+					username: '${SALESFORCE_USERNAME}',
+					password: '${SALESFORCE_PASSWORD}',
 					module: 'Contact',
 					idField: 'contact_id',
 					batchSize: 100,
