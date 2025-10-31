@@ -165,6 +165,38 @@ describe('Discovery Tools Contract Tests', () => {
 				expect(step.tags.length).toBeGreaterThanOrEqual(3);
 			});
 		});
+
+		// T176: Verify all Phase 9 BigData step types are discoverable
+		it('should discover all Phase 9 BigData step types (15 total)', async () => {
+			const bigDataSteps = await listStepTypesTool('BigData');
+
+			// Should have exactly 15 BigData types from Phase 9
+			expect(bigDataSteps.length).toBeGreaterThanOrEqual(15);
+
+			// Verify all Phase 9 BigData step types are present
+			const phase9BigDataTypes = [
+				'HadoopFileInput', 'HadoopFileOutput', 'HDFSFileInput', 'HDFSFileOutput',
+				'HBaseInput', 'HBaseOutput', 'S3FileInput', 'S3FileOutput',
+				'AzureEventHubsConsumer', 'AzureEventHubsProducer', 'GoogleAnalytics',
+				'SalesforceUpsert', 'SalesforceDelete', 'AvroInput', 'AvroOutput'
+			];
+
+			const foundStepTypes = bigDataSteps.map(s => s.typeId);
+			phase9BigDataTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+
+			// Verify all BigData steps have proper metadata
+			bigDataSteps.forEach(step => {
+				expect(step).toHaveProperty('typeId');
+				expect(step).toHaveProperty('category', 'BigData');
+				expect(step).toHaveProperty('displayName');
+				expect(step).toHaveProperty('description');
+				expect(step.description.length).toBeGreaterThan(50);
+				expect(step).toHaveProperty('tags');
+				expect(step.tags.length).toBeGreaterThanOrEqual(3);
+			});
+		});
 	});
 
 	describe('getStepTypeSchematool', () => {
