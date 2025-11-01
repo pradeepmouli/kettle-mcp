@@ -30,6 +30,173 @@ describe('Discovery Tools Contract Tests', () => {
 				expect(step.category).toBe('Input');
 			});
 		});
+
+		// T038: Verify all 30 Phase 3 input step types are discoverable
+		it('should discover all Phase 3 input step types (35+ total)', async () => {
+			const inputSteps = await listStepTypesTool('Input');
+
+			// Should have at least 35 input types (5 existing + 30 from Phase 3)
+			expect(inputSteps.length).toBeGreaterThanOrEqual(35);
+
+			// Verify all Phase 3 step types are present
+			const phase3StepTypes = [
+				'MySQLBulkLoader', 'PostgreSQLBulkLoader', 'OracleBulkLoader', 'SQLServerBulkLoader',
+				'MonetDBBulkLoader', 'VerticaBulkLoader', 'DatabaseJoin', 'GetTableNames',
+				'CSVInput', 'FixedFileInput', 'AccessInput', 'PropertyInput', 'LDIFInput', 
+				'YAMLInput', 'ParquetInput', 'KafkaConsumer', 'JMSInput', 'MQInput', 
+				'MQTTSubscriber', 'SOAPInput', 'HTTPClient', 'WebServiceLookup',
+				'S3CSVInput', 'MongoDbInput', 'CassandraInput', 'ElasticsearchInput', 
+				'SalesforceInput', 'GetXMLData', 'RSSInput', 'LDAPInput'
+			];
+
+			const foundStepTypes = inputSteps.map(s => s.typeId);
+			phase3StepTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+		});
+
+		// T104: Verify all 20 Phase 5 output step types are discoverable
+		it('should discover all Phase 5 output step types (23+ total)', async () => {
+			const outputSteps = await listStepTypesTool('Output');
+
+			// Should have at least 23 output types (3 existing + 20 from Phase 5)
+			expect(outputSteps.length).toBeGreaterThanOrEqual(23);
+
+			// Verify all Phase 5 step types are present
+			const phase5StepTypes = [
+				'InsertUpdate', 'Update', 'Delete', 'SynchronizeAfterMerge',
+				'MySQLBulkLoader', 'PostgreSQLBulkLoader',
+				'ExcelOutput', 'AccessOutput', 'PropertyOutput', 'ParquetOutput',
+				'XMLOutput', 'YAMLOutput',
+				'KafkaProducer', 'JMSOutput', 'MQOutput', 'MQTTPublisher',
+				'S3CSVOutput', 'MongoDbOutput', 'CassandraOutput', 'ElasticsearchBulkInsert'
+			];
+
+			const foundStepTypes = outputSteps.map(s => s.typeId);
+			phase5StepTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+		});
+
+		// T145: Verify all Phase 7 lookup step types are discoverable
+		it('should discover all Phase 7 lookup step types (5 total)', async () => {
+			const lookupSteps = await listStepTypesTool('Lookup');
+
+			// Should have at least 5 lookup types from Phase 7
+			expect(lookupSteps.length).toBeGreaterThanOrEqual(5);
+
+			// Verify all Phase 7 lookup step types are present
+			const phase7LookupTypes = [
+				'StreamLookup', 'DatabaseLookup', 'FuzzyMatch', 
+				'DimensionLookup', 'CombinationLookup'
+			];
+
+			const foundStepTypes = lookupSteps.map(s => s.typeId);
+			phase7LookupTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+
+			// Verify all lookup steps have proper metadata
+			lookupSteps.forEach(step => {
+				expect(step).toHaveProperty('typeId');
+				expect(step).toHaveProperty('category', 'Lookup');
+				expect(step).toHaveProperty('displayName');
+				expect(step).toHaveProperty('description');
+				expect(step.description.length).toBeGreaterThan(50);
+				expect(step).toHaveProperty('tags');
+				expect(step.tags.length).toBeGreaterThanOrEqual(3);
+			});
+		});
+
+		// T145: Verify all Phase 7 join step types are discoverable
+		it('should discover all Phase 7 join step types (2+ total)', async () => {
+			const joinSteps = await listStepTypesTool('Join');
+
+			// Should have at least 2 join types from Phase 7
+			expect(joinSteps.length).toBeGreaterThanOrEqual(2);
+
+			// Verify Phase 7 join step types are present
+			const phase7JoinTypes = ['MergeRows', 'Append'];
+
+			const foundStepTypes = joinSteps.map(s => s.typeId);
+			phase7JoinTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+
+			// Verify all join steps have proper metadata
+			joinSteps.forEach(step => {
+				expect(step).toHaveProperty('typeId');
+				expect(step).toHaveProperty('category', 'Join');
+				expect(step).toHaveProperty('displayName');
+				expect(step).toHaveProperty('description');
+				expect(step.description.length).toBeGreaterThan(50);
+				expect(step).toHaveProperty('tags');
+				expect(step.tags.length).toBeGreaterThanOrEqual(3);
+			});
+		});
+
+		// T158: Verify all Phase 8 validation step types are discoverable
+		it('should discover all Phase 8 validation step types (10 total)', async () => {
+			const validationSteps = await listStepTypesTool('Validation');
+
+			// Should have exactly 10 validation types from Phase 8
+			expect(validationSteps.length).toBeGreaterThanOrEqual(10);
+
+			// Verify all Phase 8 validation step types are present
+			const phase8ValidationTypes = [
+				'DataValidator', 'CheckSum', 'CRC32', 'MD5', 'Coalesce',
+				'DataCleanse', 'DetectEmptyStream', 'FieldValidator', 
+				'Validator', 'DataGrid'
+			];
+
+			const foundStepTypes = validationSteps.map(s => s.typeId);
+			phase8ValidationTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+
+			// Verify all validation steps have proper metadata
+			validationSteps.forEach(step => {
+				expect(step).toHaveProperty('typeId');
+				expect(step).toHaveProperty('category', 'Validation');
+				expect(step).toHaveProperty('displayName');
+				expect(step).toHaveProperty('description');
+				expect(step.description.length).toBeGreaterThan(50);
+				expect(step).toHaveProperty('tags');
+				expect(step.tags.length).toBeGreaterThanOrEqual(3);
+			});
+		});
+
+		// T176: Verify all Phase 9 BigData step types are discoverable
+		it('should discover all Phase 9 BigData step types (15 total)', async () => {
+			const bigDataSteps = await listStepTypesTool('BigData');
+
+			// Should have exactly 15 BigData types from Phase 9
+			expect(bigDataSteps.length).toBeGreaterThanOrEqual(15);
+
+			// Verify all Phase 9 BigData step types are present
+			const phase9BigDataTypes = [
+				'HadoopFileInput', 'HadoopFileOutput', 'HDFSFileInput', 'HDFSFileOutput',
+				'HBaseInput', 'HBaseOutput', 'S3FileInput', 'S3FileOutput',
+				'AzureEventHubsConsumer', 'AzureEventHubsProducer', 'GoogleAnalytics',
+				'SalesforceUpsert', 'SalesforceDelete', 'AvroInput', 'AvroOutput'
+			];
+
+			const foundStepTypes = bigDataSteps.map(s => s.typeId);
+			phase9BigDataTypes.forEach(expectedType => {
+				expect(foundStepTypes).toContain(expectedType);
+			});
+
+			// Verify all BigData steps have proper metadata
+			bigDataSteps.forEach(step => {
+				expect(step).toHaveProperty('typeId');
+				expect(step).toHaveProperty('category', 'BigData');
+				expect(step).toHaveProperty('displayName');
+				expect(step).toHaveProperty('description');
+				expect(step.description.length).toBeGreaterThan(50);
+				expect(step).toHaveProperty('tags');
+				expect(step.tags.length).toBeGreaterThanOrEqual(3);
+			});
+		});
 	});
 
 	describe('getStepTypeSchematool', () => {

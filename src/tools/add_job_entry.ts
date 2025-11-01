@@ -1,6 +1,6 @@
 import { validateJobEntryConfiguration } from '../kettle/schemas/jobs/entryTypes/index.js';
 import { buildKettleXml, ensureKettleFile, parseKettleXml } from '../kettle/xml-utils.js';
-import { validateJobEntry, validateJobHop } from '../models/JobEntry.js';
+import { validateJobHop } from '../models/JobEntry.js';
 import { atomicWrite, createBackup, generateDiff } from '../utils/file-utils.js';
 
 /**

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+src/
+tests
+
+# Test artifacts
+.nyc_output/
+
+# Minimized files
+*.min.js
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Spec-kit generated docs (optional)
+specs/*/contracts/

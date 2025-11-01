@@ -1,0 +1,250 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Get Step Type Schema Response",
+	"description": "Response format for the get_step_type_schema MCP tool. Returns complete metadata and configuration schema for a specific step type.",
+	"type": "object",
+	"required": [
+		"typeId",
+		"category",
+		"displayName",
+		"description",
+		"tags",
+		"schema"
+	],
+	"properties": {
+		"typeId": {
+			"type": "string",
+			"description": "Unique identifier matching Kettle's internal step name",
+			"pattern": "^[A-Za-z0-9_]+$",
+			"examples": [
+				"TableInput"
+			]
+		},
+		"category": {
+			"type": "string",
+			"enum": [
+				"Input",
+				"Output",
+				"Transform",
+				"Lookup",
+				"Join",
+				"Flow",
+				"Scripting",
+				"Utility",
+				"BigData",
+				"Validation"
+			],
+			"description": "Functional category of the step type"
+		},
+		"displayName": {
+			"type": "string",
+			"minLength": 3,
+			"maxLength": 50,
+			"description": "Human-readable name shown in UI",
+			"examples": [
+				"Table Input"
+			]
+		},
+		"description": {
+			"type": "string",
+			"minLength": 50,
+			"description": "Action-oriented description of step purpose and common use cases"
+		},
+		"tags": {
+			"type": "array",
+			"minItems": 3,
+			"maxItems": 5,
+			"uniqueItems": true,
+			"items": {
+				"type": "string"
+			},
+			"description": "Capability keywords from standardized taxonomy"
+		},
+		"schema": {
+			"type": "object",
+			"required": [
+				"fields"
+			],
+			"properties": {
+				"fields": {
+					"type": "array",
+					"description": "Array of configuration field definitions",
+					"items": {
+						"type": "object",
+						"required": [
+							"name",
+							"type",
+							"required"
+						],
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "Field name in configuration object"
+							},
+							"type": {
+								"type": "string",
+								"enum": [
+									"string",
+									"number",
+									"boolean",
+									"object",
+									"array",
+									"enum"
+								],
+								"description": "Data type of the field"
+							},
+							"required": {
+								"type": "boolean",
+								"description": "Whether the field is required"
+							},
+							"description": {
+								"type": "string",
+								"description": "Field purpose and usage guidance"
+							},
+							"default": {
+								"description": "Default value if field is optional"
+							},
+							"validation": {
+								"type": "object",
+								"description": "Validation constraints",
+								"properties": {
+									"min": {
+										"type": "number",
+										"description": "Minimum value for numbers or minimum length for strings"
+									},
+									"max": {
+										"type": "number",
+										"description": "Maximum value for numbers or maximum length for strings"
+									},
+									"pattern": {
+										"type": "string",
+										"description": "Regex pattern for string validation"
+									},
+									"enum": {
+										"type": "array",
+										"description": "Allowed values for enum fields",
+										"items": {
+											"type": "string"
+										}
+									}
+								}
+							},
+							"nested": {
+								"type": "array",
+								"description": "Nested fields for object or array types (recursive structure)",
+								"items": {
+									"$ref": "#/properties/schema/properties/fields/items"
+								}
+							}
+						}
+					}
+				}
+			},
+			"description": "Serialized Zod configuration schema"
+		},
+		"examples": {
+			"type": "array",
+			"description": "Example configurations demonstrating common usage patterns",
+			"items": {
+				"type": "object",
+				"required": [
+					"name",
+					"description",
+					"configuration"
+				],
+				"properties": {
+					"name": {
+						"type": "string",
+						"minLength": 5,
+						"maxLength": 50,
+						"description": "Short, descriptive name for the scenario"
+					},
+					"description": {
+						"type": "string",
+						"minLength": 20,
+						"description": "Detailed explanation of what this configuration does and when to use it"
+					},
+					"configuration": {
+						"type": "object",
+						"description": "Complete configuration object matching the step type's schema",
+						"additionalProperties": true
+					}
+				}
+			}
+		}
+	},
+	"additionalProperties": false,
+	"examples": [
+		{
+			"typeId": "TableInput",
+			"category": "Input",
+			"displayName": "Table Input",
+			"description": "Read data from a database table using SQL queries. Supports parameterized queries, connection pooling, and result set streaming for efficient data extraction.",
+			"tags": [
+				"database",
+				"read",
+				"sql",
+				"input",
+				"table"
+			],
+			"schema": {
+				"fields": [
+					{
+						"name": "connection",
+						"type": "string",
+						"required": true,
+						"description": "Database connection name (must be defined in Kettle's connection repository)"
+					},
+					{
+						"name": "sql",
+						"type": "string",
+						"required": true,
+						"description": "SQL query to execute. Supports parameter substitution using ? placeholders.",
+						"validation": {
+							"min": 1
+						}
+					},
+					{
+						"name": "limit",
+						"type": "number",
+						"required": false,
+						"description": "Maximum number of rows to return (0 = no limit)",
+						"default": 0,
+						"validation": {
+							"min": 0
+						}
+					},
+					{
+						"name": "enableLazyConversion",
+						"type": "boolean",
+						"required": false,
+						"description": "Optimize memory usage by deferring type conversion until field access",
+						"default": false
+					}
+				]
+			},
+			"examples": [
+				{
+					"name": "Read Customer Orders",
+					"description": "Read all customer orders from MySQL orders table with timestamp filtering for incremental loads",
+					"configuration": {
+						"connection": "MySQL_Production",
+						"sql": "SELECT * FROM orders WHERE created_at > ? ORDER BY created_at",
+						"limit": 0,
+						"enableLazyConversion": true
+					}
+				},
+				{
+					"name": "Read Top Products",
+					"description": "Read top 100 best-selling products from PostgreSQL with aggregated sales data",
+					"configuration": {
+						"connection": "PostgreSQL_Analytics",
+						"sql": "SELECT product_id, product_name, SUM(quantity) as total_sales FROM sales GROUP BY product_id, product_name ORDER BY total_sales DESC",
+						"limit": 100,
+						"enableLazyConversion": false
+					}
+				}
+			]
+		}
+	]
+}
