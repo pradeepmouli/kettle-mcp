@@ -1,6 +1,14 @@
-# Kettle-MCP
+# kettle-mcp
 
-A Model Context Protocol (MCP) server for managing Pentaho Kettle ETL workflows programmatically.
+> MCP server for Pentaho Kettle job and transformation management.
+
+> **⚠️ Pre-1.0 software** — APIs are subject to change between minor versions. Pin to exact versions in production. See the [release notes](https://github.com/pradeepmouli/kettle-mcp/releases) for breaking changes between releases.
+
+[![npm](https://img.shields.io/npm/v/kettle-mcp)](https://www.npmjs.com/package/kettle-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Node.js >= 20](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org)
+
+📚 **Documentation:** <https://pradeepmouli.github.io/kettle-mcp/>
 
 ## Overview
 
@@ -28,13 +36,13 @@ git clone https://github.com/pradeepmouli/kettle-mcp.git
 cd kettle-mcp
 
 # Install dependencies
-npm install
+pnpm install
 
 # Build the project
-npm run build
+pnpm run build
 
 # Run tests to verify
-npm test
+pnpm test
 ```
 
 ### Usage with MCP Clients
@@ -250,12 +258,12 @@ if (validation.valid) {
 
 ### Scripts
 
-- `npm run build` - Compile TypeScript
-- `npm run dev` - Watch mode for development
-- `npm test` - Run all tests
-- `npm run test:coverage` - Run tests with coverage report
-- `npm run lint` - Check code quality
-- `npm run format` - Format code with Prettier
+- `pnpm run build` - Compile TypeScript
+- `pnpm run dev` - Watch mode for development
+- `pnpm test` - Run all tests
+- `pnpm run test:coverage` - Run tests with coverage report
+- `pnpm run lint` - Check code quality
+- `pnpm run format` - Format code with Prettier
 
 ## Architecture
 
@@ -292,8 +300,8 @@ kettle-mcp/
 
 ### Prerequisites
 
-- Node.js 18.0 or higher
-- npm or yarn package manager
+- Node.js 20.0 or higher
+- pnpm package manager
 - Git
 - An MCP-compatible AI agent (Claude, Copilot, etc.)
 
@@ -309,28 +317,28 @@ kettle-mcp/
 2. Install dependencies:
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. Build the project:
 
    ```bash
-   npm run build
+   pnpm run build
    ```
 
 4. Run tests:
 
    ```bash
-   npm test
+   pnpm test
    ```
 
 ### Development Commands
 
-- **Build**: `npm run build` - Compile TypeScript to JavaScript
-- **Dev mode**: `npm run dev` - Watch mode for development
-- **Test**: `npm test` - Run test suite
-- **Lint**: `npm run lint` - Check code quality
-- **Format**: `npm run format` - Format code with Prettier
+- **Build**: `pnpm run build` - Compile TypeScript to JavaScript
+- **Dev mode**: `pnpm run dev` - Watch mode for development
+- **Test**: `pnpm test` - Run test suite
+- **Lint**: `pnpm run lint` - Check code quality
+- **Format**: `pnpm run format` - Format code with Prettier
 
 ### Spec-Kit Workflow
 
@@ -385,7 +393,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Integration Tests** (13): End-to-end workflow validation
 - **Unit Tests** (62): Handler functions, parsers, validators
 
-Run `npm test` to verify all tests pass.
+Run `pnpm test` to verify all tests pass.
 
 ### Supported Step Types
 

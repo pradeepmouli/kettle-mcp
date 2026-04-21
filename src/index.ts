@@ -12,7 +12,24 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { registerTools } from './server.js';
 
 /**
- * Main entry point for the Kettle-MCP server
+ * Main entry point for the Kettle-MCP server.
+ *
+ * @remarks
+ * Starts an MCP stdio server that exposes tools for reading, creating,
+ * modifying, validating, and executing Pentaho Kettle transformations and jobs.
+ *
+ * @useWhen You need to run kettle-mcp as a standalone MCP server process (e.g., from Claude Desktop config).
+ * @avoidWhen You want to embed kettle-mcp tools inside another MCP server — import {@link registerTools} directly instead.
+ * @pitfalls NEVER run this inside an existing stdio MCP server process BECAUSE two servers sharing stdio will corrupt the transport framing.
+ *
+ * @example
+ * ```bash
+ * node dist/index.js
+ * # or via npx
+ * npx kettle-mcp
+ * ```
+ *
+ * @category Server
  */
 async function main(): Promise<void> {
 	// Create MCP server instance

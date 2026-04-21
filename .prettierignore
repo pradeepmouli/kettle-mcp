@@ -1,0 +1,17 @@
+**/dist/**
+**/build/**
+**/coverage/**
+docs/api/**
+docs/html/**
+apps/docs/build/**
+apps/docs/.docusaurus/**
+apps/docs/.vitepress/dist/**
+apps/docs/.vitepress/cache/**
+apps/docs/api/**
+.agents/**
+.claude/**
+.codex/**
+.gemini/**
+.specify/**
+.github/agents/**
+.github/skills/**

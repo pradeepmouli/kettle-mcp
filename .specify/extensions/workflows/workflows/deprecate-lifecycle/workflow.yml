@@ -1,0 +1,78 @@
+schema_version: "1.0"
+
+workflow:
+  id: "deprecate-lifecycle"
+  name: "Deprecate Lifecycle"
+  version: "1.0.0"
+  author: "Spec Kit Extensions"
+  description: "Initialize a deprecation, review its phased rollout, and optionally continue through plan, tasks, and Phase 1 implementation."
+
+requires:
+  speckit_version: ">=0.7.0"
+  integrations:
+    any: ["copilot", "claude", "gemini"]
+
+inputs:
+  request:
+    type: string
+    required: true
+    prompt: "Deprecation request (for example: 014 low usage)"
+  integration:
+    type: string
+    default: "copilot"
+    prompt: "Integration to use (for example: copilot, claude, gemini)"
+
+steps:
+  - id: verify-extension
+    type: shell
+    run: >-
+      test -f .specify/extensions/workflows/extension.yml || {
+        echo 'Install spec-kit-extensions first with specify-extend --all or specify extension add workflows --from <url>.' >&2;
+        exit 1;
+      }
+
+  - id: init-deprecate
+    command: speckit.workflows.deprecate
+    integration: "{{ inputs.integration }}"
+    input:
+      args: "{{ inputs.request }}"
+
+  - id: review-deprecation-plan
+    type: gate
+    message: "Review the deprecation plan and dependency scan. Confirm the migration path, affected users, and phased rollout assumptions before detailed planning."
+    options: [approve, reject]
+    on_reject: retry
+
+  - id: plan
+    command: speckit.plan
+    integration: "{{ inputs.integration }}"
+
+  - id: stakeholder-approval
+    type: gate
+    message: "Review the deprecation execution plan. Confirm stakeholder alignment for timeline, communications, and rollback before task generation."
+    options: [approve, reject]
+    on_reject: retry
+
+  - id: tasks
+    command: speckit.tasks
+    integration: "{{ inputs.integration }}"
+
+  - id: review-tasks
+    type: gate
+    message: "Review the deprecation tasks. Confirm Phase 1 warnings, communication tasks, and rollback points are represented before implementation."
+    options: [approve, reject]
+    on_reject: retry
+
+  - id: ready-for-implement
+    type: gate
+    message: "Execute Phase 1 of the deprecation now? Reject to stop after planning and task generation."
+    options: [approve, reject]
+    on_reject: skip
+
+  - id: implement-if-approved
+    type: if
+    condition: "{{ steps.ready-for-implement.output.choice == 'approve' }}"
+    then:
+      - id: implement
+        command: speckit.implement
+        integration: "{{ inputs.integration }}"

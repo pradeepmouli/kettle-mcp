@@ -1,0 +1,312 @@
+installed: []
+settings:
+  auto_execute_hooks: true
+hooks:
+  before_constitution:
+  - extension: git
+    command: speckit.git.initialize
+    enabled: true
+    optional: false
+    prompt: Execute speckit.git.initialize?
+    description: Initialize Git repository before constitution setup
+    condition: null
+  before_specify:
+  - extension: git
+    command: speckit.git.feature
+    enabled: true
+    optional: false
+    prompt: Execute speckit.git.feature?
+    description: Create feature branch before specification
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-before-specify
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary before_specify
+    condition: null
+  - extension: branch-convention
+    command: speckit.branch-convention.validate
+    enabled: true
+    optional: true
+    prompt: Validate branch naming convention before creating new feature?
+    description: Check naming convention compliance before /specify creates a new
+      branch
+    condition: null
+  - extension: superb
+    command: speckit.superb.clarify
+    enabled: true
+    optional: true
+    prompt: Run intent-clarification before writing the spec? (recommended for new
+      features)
+    description: 'Socratic design refinement via the superpowers brainstorming skill.
+      Ensures the spec captures the real requirement, not just the stated one.
+
+      '
+    condition: null
+  before_clarify:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit outstanding changes before clarification?
+    description: Auto-commit before spec clarification
+    condition: null
+  before_plan:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit outstanding changes before planning?
+    description: Auto-commit before implementation planning
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-before-plan
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary before_plan
+    condition: null
+  before_tasks:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit outstanding changes before task generation?
+    description: Auto-commit before task generation
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-before-tasks
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary before_tasks
+    condition: null
+  before_implement:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit outstanding changes before implementation?
+    description: Auto-commit before implementation
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-before-implement
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary before_implement
+    condition: null
+  - extension: superb
+    command: speckit.superb.tdd
+    enabled: true
+    optional: false
+    prompt: Execute speckit.superb.tdd?
+    description: 'Mandatory TDD gate. Loads the superpowers test-driven-development
+      skill and binds it to the spec-kit task structure before any code is written.
+
+      '
+    condition: null
+  before_checklist:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit outstanding changes before checklist?
+    description: Auto-commit before checklist generation
+    condition: null
+  before_analyze:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit outstanding changes before analysis?
+    description: Auto-commit before analysis
+    condition: null
+  before_taskstoissues:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit outstanding changes before issue sync?
+    description: Auto-commit before tasks-to-issues conversion
+    condition: null
+  after_constitution:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit constitution changes?
+    description: Auto-commit after constitution update
+    condition: null
+  after_specify:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit specification changes?
+    description: Auto-commit after specification
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-after-specify
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary after_specify
+    condition: null
+  - extension: worktree
+    command: speckit.worktree.create
+    enabled: true
+    optional: true
+    prompt: Create an isolated worktree for this new feature?
+    description: Auto-spawn a worktree after a new feature is specified
+    condition: null
+  - extension: refine
+    command: speckit.refine.status
+    enabled: true
+    optional: true
+    prompt: Check artifact sync status after specification?
+    description: Show sync status after spec generation
+    condition: null
+  after_clarify:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit clarification changes?
+    description: Auto-commit after spec clarification
+    condition: null
+  after_plan:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit plan changes?
+    description: Auto-commit after implementation planning
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-after-plan
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary after_plan
+    condition: null
+  - extension: refine
+    command: speckit.refine.status
+    enabled: true
+    optional: true
+    prompt: Check artifact sync status after planning?
+    description: Show sync status after plan generation
+    condition: null
+  after_tasks:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit task changes?
+    description: Auto-commit after task generation
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-after-tasks
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary after_tasks
+    condition: null
+  - extension: superb
+    command: speckit.superb.review
+    enabled: true
+    optional: true
+    prompt: Review tasks.md against spec.md for coverage gaps before implementation?
+    description: 'Catches missing or under-specified tasks at planning time. Produces
+      a spec-coverage matrix with gap identification. Bridge-original logic.
+
+      '
+    condition: null
+  after_implement:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit implementation changes?
+    description: Auto-commit after implementation
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-after-implement
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary after_implement
+    condition: null
+  - extension: sync
+    command: speckit.sync.analyze
+    enabled: true
+    optional: true
+    prompt: Check for spec drift after implementation?
+    description: ''
+    condition: null
+  - extension: review
+    command: speckit.review.run
+    enabled: true
+    optional: true
+    prompt: Run PR review on implemented changes?
+    description: Comprehensive review after implementation
+    condition: null
+  - extension: superb
+    command: speckit.superb.verify
+    enabled: true
+    optional: false
+    prompt: Execute speckit.superb.verify?
+    description: 'Mandatory completion gate. Loads the superpowers verification skill
+      and extends it with spec-kit spec-coverage checks. Prevents false completions.
+
+      '
+    condition: null
+  - extension: verify
+    command: speckit.verify.run
+    enabled: true
+    optional: true
+    prompt: Run verify to validate implementation against specification?
+    description: Post-implementation verification gate
+    condition: null
+  after_checklist:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit checklist changes?
+    description: Auto-commit after checklist generation
+    condition: null
+  after_analyze:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit analysis results?
+    description: Auto-commit after analysis
+    condition: null
+  after_taskstoissues:
+  - extension: git
+    command: speckit.git.commit
+    enabled: true
+    optional: true
+    prompt: Commit after syncing issues?
+    description: Auto-commit after tasks-to-issues conversion
+    condition: null
+  after_plan_ultraplan:
+  - extension: workflows
+    command: speckit.workflows.ultraplan-tasks
+    enabled: true
+    optional: true
+    prompt: Run ultraplan to generate a deep task breakdown from spec.md and plan.md?
+    description: Deep task breakdown using extended analysis — opt-in replacement
+      for speckit.tasks
+    condition: null
+  before_commit:
+  - extension: workflows
+    command: speckit.workflows.review
+    enabled: true
+    optional: true
+    prompt: Confirm review is approved before committing?
+    description: Ensure review is complete before git commit
+    condition: null

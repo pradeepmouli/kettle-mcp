@@ -1,0 +1,194 @@
+schema_version: "1.0"
+
+extension:
+  id: "workflows"
+  name: "Spec Kit Workflow Extensions"
+  version: "3.4.1"
+  description: "11 production-tested workflows covering the complete software development lifecycle beyond feature development."
+  author: "pradeepmouli"
+  repository: "https://github.com/pradeepmouli/spec-kit-extensions"
+  license: "MIT"
+  homepage: "https://github.com/pradeepmouli/spec-kit-extensions"
+
+requires:
+  speckit_version: ">=0.3.1"
+  commands:
+    - "speckit.specify"
+
+provides:
+  commands:
+    - name: "speckit.workflows.bugfix"
+      file: "commands/bugfix.md"
+      description: "Create a bug fix workflow with regression test and minimal documentation"
+      aliases: ["speckit.bugfix"]
+    - name: "speckit.workflows.hotfix"
+      file: "commands/hotfix.md"
+      description: "Create an emergency hotfix workflow"
+      aliases: ["speckit.hotfix"]
+    - name: "speckit.workflows.enhance"
+      file: "commands/enhance.md"
+      description: "Create a minor enhancement workflow"
+      aliases: ["speckit.enhance"]
+    - name: "speckit.workflows.refactor"
+      file: "commands/refactor.md"
+      description: "Create a refactoring workflow"
+      aliases: ["speckit.refactor"]
+    - name: "speckit.workflows.deprecate"
+      file: "commands/deprecate.md"
+      description: "Initiate a deprecation workflow"
+      aliases: ["speckit.deprecate"]
+    - name: "speckit.workflows.modify"
+      file: "commands/modify.md"
+      description: "Modify an existing feature with impact analysis"
+      aliases: ["speckit.modify"]
+    - name: "speckit.workflows.baseline"
+      file: "commands/baseline.md"
+      description: "Create baseline documentation"
+      aliases: ["speckit.baseline"]
+    - name: "speckit.workflows.cleanup"
+      file: "commands/cleanup.md"
+      description: "Validate and reorganize spec-kit artifacts"
+      aliases: ["speckit.cleanup"]
+    - name: "speckit.workflows.review"
+      file: "commands/review.md"
+      description: "Review completed implementation work"
+      aliases: ["speckit.review"]
+    - name: "speckit.workflows.phasestoissues"
+      file: "commands/phasestoissues.md"
+      description: "Convert development phases into GitHub issues"
+      aliases: ["speckit.phasestoissues"]
+    - name: "speckit.workflows.incorporate"
+      file: "commands/incorporate.md"
+      description: "Incorporate documents into workflows"
+      aliases: ["speckit.incorporate"]
+    - name: "speckit.workflows.ultraplan-tasks"
+      file: "commands/ultraplan-tasks.md"
+      description: "Generate a deeply-reasoned task breakdown using extended analysis (opt-in)"
+      aliases: ["speckit.ultraplan.tasks"]
+      optional: true
+    - name: "speckit.workflows.issue-sync-before-specify"
+      file: "commands/issue-sync-before-specify.md"
+      description: "Sync linked issue before specify"
+      aliases: ["speckit.issuesync.before-specify"]
+    - name: "speckit.workflows.issue-sync-after-specify"
+      file: "commands/issue-sync-after-specify.md"
+      description: "Sync linked issue after specify"
+      aliases: ["speckit.issuesync.after-specify"]
+    - name: "speckit.workflows.issue-sync-before-plan"
+      file: "commands/issue-sync-before-plan.md"
+      description: "Sync linked issue before plan"
+      aliases: ["speckit.issuesync.before-plan"]
+    - name: "speckit.workflows.issue-sync-after-plan"
+      file: "commands/issue-sync-after-plan.md"
+      description: "Sync linked issue after plan"
+      aliases: ["speckit.issuesync.after-plan"]
+    - name: "speckit.workflows.issue-sync-before-tasks"
+      file: "commands/issue-sync-before-tasks.md"
+      description: "Sync linked issue before tasks"
+      aliases: ["speckit.issuesync.before-tasks"]
+    - name: "speckit.workflows.issue-sync-after-tasks"
+      file: "commands/issue-sync-after-tasks.md"
+      description: "Sync linked issue after tasks"
+      aliases: ["speckit.issuesync.after-tasks"]
+    - name: "speckit.workflows.issue-sync-before-implement"
+      file: "commands/issue-sync-before-implement.md"
+      description: "Sync linked issue before implement"
+      aliases: ["speckit.issuesync.before-implement"]
+    - name: "speckit.workflows.issue-sync-after-implement"
+      file: "commands/issue-sync-after-implement.md"
+      description: "Sync linked issue after implement"
+      aliases: ["speckit.issuesync.after-implement"]
+
+  config:
+    - name: "workflows-config.yml"
+      template: "config/workflows-config.template.yml"
+      description: "Configure workflow behaviour (task limits, quality gates, etc.)"
+      required: false
+    - name: "issue-sync.env"
+      template: "config/issue-sync.template.env"
+      description: "Configure linked-issue hook status/label mappings"
+      required: false
+
+hooks:
+  after_plan_ultraplan:
+    command: "speckit.workflows.ultraplan-tasks"
+    optional: true
+    prompt: "Run ultraplan to generate a deep task breakdown from spec.md and plan.md?"
+    description: "Deep task breakdown using extended analysis — opt-in replacement for speckit.tasks"
+    condition: null
+  before_specify:
+    command: "speckit.workflows.issue-sync-before-specify"
+    optional: false
+    prompt: null
+    description: "Update linked issue for workflow boundary before_specify"
+    condition: null
+  after_specify:
+    command: "speckit.workflows.issue-sync-after-specify"
+    optional: false
+    prompt: null
+    description: "Update linked issue for workflow boundary after_specify"
+    condition: null
+  before_plan:
+    command: "speckit.workflows.issue-sync-before-plan"
+    optional: false
+    prompt: null
+    description: "Update linked issue for workflow boundary before_plan"
+    condition: null
+  after_plan:
+    command: "speckit.workflows.issue-sync-after-plan"
+    optional: false
+    prompt: null
+    description: "Update linked issue for workflow boundary after_plan"
+    condition: null
+  before_tasks:
+    command: "speckit.workflows.issue-sync-before-tasks"
+    optional: false
+    prompt: null
+    description: "Update linked issue for workflow boundary before_tasks"
+    condition: null
+  after_tasks:
+    command: "speckit.workflows.issue-sync-after-tasks"
+    optional: false
+    prompt: null
+    description: "Update linked issue for workflow boundary after_tasks"
+    condition: null
+  before_implement:
+    command: "speckit.workflows.issue-sync-before-implement"
+    optional: false
+    prompt: null
+    description: "Update linked issue for workflow boundary before_implement"
+    condition: null
+  after_implement:
+    command: "speckit.workflows.issue-sync-after-implement"
+    optional: false
+    prompt: null
+    description: "Update linked issue for workflow boundary after_implement"
+    condition: null
+  before_commit:
+    command: "speckit.workflows.review"
+    optional: true
+    prompt: "Confirm review is approved before committing?"
+    description: "Ensure review is complete before git commit"
+    condition: null
+
+defaults:
+  enhance:
+    max_tasks: 7
+    min_tasks: 3
+  bugfix:
+    require_regression_test: true
+  review:
+    min_checklist_items: 5
+    gate_commit: true
+  issue_sync:
+    bootstrap_labels: true
+    add_comment: false
+
+tags:
+  - "workflows"
+  - "bugfix"
+  - "hotfix"
+  - "refactor"
+  - "deprecation"
+  - "review"
+  - "lifecycle"

@@ -8,6 +8,12 @@
 	"bin": {
 		"kettle-mcp": "dist/index.js"
 	},
+	"files": [
+		"dist",
+		"README.md",
+		"CHANGELOG.md",
+		"LICENSE"
+	],
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsc --watch",
@@ -18,7 +24,9 @@
 		"lint:fix": "eslint src/**/*.ts --fix",
 		"format": "prettier --write \"src/**/*.ts\"",
 		"format:check": "prettier --check \"src/**/*.ts\"",
-		"clean": "rm -rf dist"
+		"clean": "rm -rf dist",
+		"docs:dev": "pnpm --filter @kettle-mcp/docs dev",
+		"docs:build": "pnpm --filter @kettle-mcp/docs build"
 	},
 	"keywords": [
 		"mcp",
@@ -26,24 +34,23 @@
 		"kettle",
 		"etl",
 		"pdi",
-		"model-context-protocol"
+		"model-context-protocol",
+		"typescript"
 	],
-	"author": {
-		"name": "Pradeep Mouli",
-		"email": "16478229+pradeepmouli@users.noreply.github.com"
-	},
+	"author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/pradeepmouli/kettle-mcp"
+		"url": "git+https://github.com/pradeepmouli/kettle-mcp.git"
 	},
 	"bugs": {
 		"url": "https://github.com/pradeepmouli/kettle-mcp/issues"
 	},
-	"homepage": "https://github.com/pradeepmouli/kettle-mcp#readme",
+	"homepage": "https://pradeepmouli.github.io/kettle-mcp/",
 	"engines": {
-		"node": ">=18.0.0"
+		"node": ">=20.0.0"
 	},
+	"packageManager": "pnpm@10.32.0",
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.20.1",
 		"@types/diff": "^7.0.2",

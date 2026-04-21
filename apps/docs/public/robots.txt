@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pradeepmouli.github.io/kettle-mcp/sitemap.xml

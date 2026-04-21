@@ -1,0 +1,31 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "../../../src/index.ts"
+  ],
+  "entryPointStrategy": "resolve",
+  "tsconfig": "../../../tsconfig.json",
+  "out": "../../api",
+  "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme", "typedoc-plugin-to-skills"],
+  "llmsTxt": true,
+  "llmsTxtOutDir": "../public",
+  "skipErrorChecking": true,
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "readme": "none",
+  "hideBreadcrumbs": false,
+  "useCodeBlocks": true,
+  "expandObjects": true,
+  "indexFormat": "table",
+  "parametersFormat": "table",
+  "propertiesFormat": "table",
+  "typeDeclarationFormat": "table",
+  "blockTags": [
+    "@useWhen", "@avoidWhen", "@never", "@config",
+    "@param", "@returns", "@example", "@remarks", "@category",
+    "@throws", "@see", "@deprecated", "@since", "@defaultValue",
+    "@typeParam", "@template", "@public", "@alpha", "@beta",
+    "@internal", "@experimental", "@override", "@virtual",
+    "@readonly", "@sealed", "@group", "@module"
+  ]
+}

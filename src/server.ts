@@ -201,7 +201,30 @@ const KETTLE_TOOLS: Tool[] = [
 ];
 
 /**
- * Register all Kettle MCP tools with the server
+ * Register all Kettle MCP tools with the given MCP server instance.
+ *
+ * @remarks
+ * Attaches `ListToolsRequestSchema` and `CallToolRequestSchema` handlers to
+ * the server. All tools are declared in {@link KETTLE_TOOLS} and dispatched
+ * through a single switch statement to the corresponding handler in
+ * `src/handlers/`.
+ *
+ * @param server - An `@modelcontextprotocol/sdk` Server instance to attach tools to.
+ *
+ * @useWhen Embedding kettle-mcp tools inside a larger composite MCP server.
+ * @avoidWhen Running as a standalone process — use the default export in `index.ts` instead.
+ * @pitfalls NEVER call `registerTools` twice on the same server instance BECAUSE the SDK will throw on duplicate handler registration.
+ *
+ * @example
+ * ```typescript
+ * import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+ * import { registerTools } from './server.js';
+ *
+ * const server = new Server({ name: 'my-server', version: '1.0.0' }, { capabilities: { tools: {} } });
+ * registerTools(server);
+ * ```
+ *
+ * @category Server
  */
 export function registerTools(server: Server): void {
 	// List available tools
