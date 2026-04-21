@@ -2,7 +2,7 @@ name: Dependency Update
 
 on:
   schedule:
-    - cron: '0 10 * * 1'  # Monday 6am ET / 10am UTC
+    - cron: '0 10 * * *'  # Daily 6am ET / 10am UTC
   workflow_dispatch:
 
 permissions:
