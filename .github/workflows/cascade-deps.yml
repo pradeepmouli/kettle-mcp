@@ -1,0 +1,49 @@
+name: Cascade Dependencies
+
+on:
+  schedule:
+    - cron: '0 10 * * *'  # Daily 6am ET / 10am UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  cascade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cascade dependabot PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "=== Enabling auto-merge on new dependabot PRs ==="
+          gh pr list --author app/dependabot --json number,autoMergeRequest \
+            --jq '.[] | select(.autoMergeRequest == null) | .number' | \
+          while read pr; do
+            echo "Enabling auto-merge on #$pr"
+            gh pr merge "$pr" --squash --auto 2>&1 || true
+          done
+
+          echo ""
+          echo "=== Updating BEHIND PRs ==="
+          gh pr list --author app/dependabot --json number,mergeStateStatus \
+            --jq '.[] | select(.mergeStateStatus == "BEHIND") | .number' | \
+          while read pr; do
+            echo "Updating branch for #$pr"
+            gh pr update-branch "$pr" 2>&1 || true
+          done
+
+          echo ""
+          echo "=== Closing DIRTY PRs (dependabot will recreate) ==="
+          gh pr list --author app/dependabot --json number,mergeStateStatus \
+            --jq '.[] | select(.mergeStateStatus == "DIRTY") | .number' | \
+          while read pr; do
+            echo "Closing conflicting #$pr"
+            gh pr close "$pr" -c "Closing conflicting PR — dependabot will recreate with fresh base." 2>&1 || true
+          done
+
+          echo ""
+          echo "=== Summary ==="
+          total=$(gh pr list --author app/dependabot --json number --jq 'length')
+          echo "Remaining dependabot PRs: $total"
