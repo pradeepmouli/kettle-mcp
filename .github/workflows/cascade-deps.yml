@@ -2,7 +2,7 @@ name: Cascade Dependencies
 
 on:
   schedule:
-    - cron: '0 10 * * *'  # Daily 6am ET / 10am UTC
+    - cron: '0 9 * * *'  # Daily 5am ET / 10am UTC
   workflow_dispatch:
 
 permissions:
