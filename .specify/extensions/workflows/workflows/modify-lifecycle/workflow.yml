@@ -1,0 +1,78 @@
+schema_version: "1.0"
+
+workflow:
+  id: "modify-lifecycle"
+  name: "Modify Lifecycle"
+  version: "1.0.0"
+  author: "Spec Kit Extensions"
+  description: "Initialize a modification, review impact analysis, and optionally continue through plan, tasks, and implement."
+
+requires:
+  speckit_version: ">=0.7.0"
+  integrations:
+    any: ["copilot", "claude", "gemini"]
+
+inputs:
+  request:
+    type: string
+    required: true
+    prompt: "Modification request (for example: 014 add avatar compression)"
+  integration:
+    type: string
+    default: "copilot"
+    prompt: "Integration to use (for example: copilot, claude, gemini)"
+
+steps:
+  - id: verify-extension
+    type: shell
+    run: >-
+      test -f .specify/extensions/workflows/extension.yml || {
+        echo 'Install spec-kit-extensions first with specify-extend --all or specify extension add workflows --from <url>.' >&2;
+        exit 1;
+      }
+
+  - id: init-modify
+    command: speckit.workflows.modify
+    integration: "{{ inputs.integration }}"
+    input:
+      args: "{{ inputs.request }}"
+
+  - id: review-modification-spec
+    type: gate
+    message: "Review the modification spec and impact analysis. Confirm affected files, contracts, and backward-compatibility concerns are captured before planning."
+    options: [approve, reject]
+    on_reject: retry
+
+  - id: plan
+    command: speckit.plan
+    integration: "{{ inputs.integration }}"
+
+  - id: review-plan
+    type: gate
+    message: "Review the modification plan. Confirm migration strategy and compatibility handling are explicit before generating tasks."
+    options: [approve, reject]
+    on_reject: retry
+
+  - id: tasks
+    command: speckit.tasks
+    integration: "{{ inputs.integration }}"
+
+  - id: review-tasks
+    type: gate
+    message: "Review the modification tasks. Confirm compatibility, test updates, and rollout tasks are represented before implementation."
+    options: [approve, reject]
+    on_reject: retry
+
+  - id: ready-for-implement
+    type: gate
+    message: "Execute the modification now? Reject to stop after planning and task generation."
+    options: [approve, reject]
+    on_reject: skip
+
+  - id: implement-if-approved
+    type: if
+    condition: "{{ steps.ready-for-implement.output.choice == 'approve' }}"
+    then:
+      - id: implement
+        command: speckit.implement
+        integration: "{{ inputs.integration }}"

@@ -1,0 +1,78 @@
+schema_version: "1.0"
+
+workflow:
+  id: "bugfix-lifecycle"
+  name: "Bugfix Lifecycle"
+  version: "1.0.0"
+  author: "Spec Kit Extensions"
+  description: "Initialize a bugfix, review its artifacts, and optionally continue through plan, tasks, and implement."
+
+requires:
+  speckit_version: ">=0.7.0"
+  integrations:
+    any: ["copilot", "claude", "gemini"]
+
+inputs:
+  request:
+    type: string
+    required: true
+    prompt: "Bug description"
+  integration:
+    type: string
+    default: "copilot"
+    prompt: "Integration to use (for example: copilot, claude, gemini)"
+
+steps:
+  - id: verify-extension
+    type: shell
+    run: >-
+      test -f .specify/extensions/workflows/extension.yml || {
+        echo 'Install spec-kit-extensions first with specify-extend --all or specify extension add workflows --from <url>.' >&2;
+        exit 1;
+      }
+
+  - id: init-bugfix
+    command: speckit.workflows.bugfix
+    integration: "{{ inputs.integration }}"
+    input:
+      args: "{{ inputs.request }}"
+
+  - id: review-bug-report
+    type: gate
+    message: "Review the generated bug report. Confirm severity, reproduction steps, and investigation notes before planning."
+    options: [approve, reject]
+    on_reject: retry
+
+  - id: plan
+    command: speckit.plan
+    integration: "{{ inputs.integration }}"
+
+  - id: review-plan
+    type: gate
+    message: "Review the bugfix plan. Confirm the regression test strategy is explicit and implementation scope stays minimal."
+    options: [approve, reject]
+    on_reject: retry
+
+  - id: tasks
+    command: speckit.tasks
+    integration: "{{ inputs.integration }}"
+
+  - id: review-tasks
+    type: gate
+    message: "Review the task breakdown. Confirm investigation and regression tests happen before code changes."
+    options: [approve, reject]
+    on_reject: retry
+
+  - id: ready-for-implement
+    type: gate
+    message: "Execute the bugfix now? Reject to stop after planning and task generation."
+    options: [approve, reject]
+    on_reject: skip
+
+  - id: implement-if-approved
+    type: if
+    condition: "{{ steps.ready-for-implement.output.choice == 'approve' }}"
+    then:
+      - id: implement
+        command: speckit.implement
+        integration: "{{ inputs.integration }}"

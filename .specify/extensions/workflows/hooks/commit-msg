@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# spec-kit-extensions: commit-msg hook
+# Enforces that commits on spec-kit branches reference task numbers (e.g., T001)
+# during the implementation phase.
+#
+# Install: specify-extend --hooks
+# Bypass:  git commit --no-verify (use sparingly)
+
+set -euo pipefail
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# --- Skip conditions ---
+
+# Allow merge commits
+if echo "$COMMIT_MSG" | head -1 | grep -qE "^Merge "; then
+    exit 0
+fi
+
+# Allow revert commits
+if echo "$COMMIT_MSG" | head -1 | grep -qE "^Revert "; then
+    exit 0
+fi
+
+# Allow fixup/squash commits
+if echo "$COMMIT_MSG" | head -1 | grep -qE "^(fixup|squash)! "; then
+    exit 0
+fi
+
+# Allow amend (message already validated on first commit)
+# Note: git doesn't set a special flag for amend, but the user chose --no-verify or already passed
+
+# --- Detect spec-kit branch ---
+
+BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+
+# Only enforce on spec-kit workflow branches
+# Patterns: NNN-*, bugfix/NNN-*, hotfix/NNN-*, refactor/NNN-*, etc.
+SPECKIT_BRANCH_PATTERN="^([0-9]{3}-|bugfix/|hotfix/|refactor/|deprecate/|modify/|enhance/|cleanup/|baseline/)"
+
+if ! echo "$BRANCH" | grep -qE "$SPECKIT_BRANCH_PATTERN"; then
+    # Not a spec-kit branch — no enforcement
+    exit 0
+fi
+
+# --- Check for task reference ---
+
+# Match task IDs: T001, T002, etc. (case-insensitive)
+# Also accept: [T001], (T001), Task T001, task: T001
+TASK_PATTERN="[Tt][0-9]{3}"
+
+if echo "$COMMIT_MSG" | grep -qE "$TASK_PATTERN"; then
+    exit 0
+fi
+
+# --- Rejection ---
+
+cat >&2 <<'EOF'
+
+  spec-kit: commit message must reference a task number
+
+  Commits on spec-kit branches must include a task reference (e.g., T001)
+  so that each commit maps to a tracked task in tasks.md.
+
+  Examples:
+    T001: Add user authentication endpoint
+    T002, T003: Refactor auth middleware and add tests
+    fix(T004): Handle edge case in validation
+
+  To skip this check (e.g., for config-only commits):
+    git commit --no-verify
+
+EOF
+exit 1

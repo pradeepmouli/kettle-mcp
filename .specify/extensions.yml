@@ -37,6 +37,13 @@ hooks:
 
       '
     condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-before-specify
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary before_specify
+    condition: null
   before_clarify:
   - extension: git
     command: speckit.git.commit
@@ -53,6 +60,13 @@ hooks:
     prompt: Commit outstanding changes before planning?
     description: Auto-commit before implementation planning
     condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-before-plan
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary before_plan
+    condition: null
   before_tasks:
   - extension: git
     command: speckit.git.commit
@@ -60,6 +74,13 @@ hooks:
     optional: true
     prompt: Commit outstanding changes before task generation?
     description: Auto-commit before task generation
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-before-tasks
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary before_tasks
     condition: null
   before_implement:
   - extension: git
@@ -78,6 +99,13 @@ hooks:
       skill and binds it to the spec-kit task structure before any code is written.
 
       '
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-before-implement
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary before_implement
     condition: null
   before_checklist:
   - extension: git
@@ -133,6 +161,13 @@ hooks:
     prompt: Check artifact sync status after specification?
     description: Show sync status after spec generation
     condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-after-specify
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary after_specify
+    condition: null
   after_clarify:
   - extension: git
     command: speckit.git.commit
@@ -156,6 +191,13 @@ hooks:
     prompt: Check artifact sync status after planning?
     description: Show sync status after plan generation
     condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-after-plan
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary after_plan
+    condition: null
   after_tasks:
   - extension: git
     command: speckit.git.commit
@@ -174,6 +216,13 @@ hooks:
 
       '
     condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-after-tasks
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary after_tasks
+    condition: null
   after_implement:
   - extension: git
     command: speckit.git.commit
@@ -191,6 +240,34 @@ hooks:
       and extends it with spec-kit spec-coverage checks. Prevents false completions.
 
       '
+    condition: null
+  - extension: workflows
+    command: speckit.workflows.issue-sync-after-implement
+    enabled: true
+    optional: false
+    prompt: null
+    description: Update linked issue for workflow boundary after_implement
+    condition: null
+  - extension: sync
+    command: speckit.sync.analyze
+    enabled: true
+    optional: true
+    prompt: Check for spec drift after implementation?
+    description: ''
+    condition: null
+  - extension: review
+    command: speckit.review.run
+    enabled: true
+    optional: true
+    prompt: Run PR review on implemented changes?
+    description: Comprehensive review after implementation
+    condition: null
+  - extension: verify
+    command: speckit.verify.run
+    enabled: true
+    optional: true
+    prompt: Run verify to validate implementation against specification?
+    description: Post-implementation verification gate
     condition: null
   after_checklist:
   - extension: git
@@ -215,4 +292,21 @@ hooks:
     optional: true
     prompt: Commit after syncing issues?
     description: Auto-commit after tasks-to-issues conversion
+    condition: null
+  after_plan_ultraplan:
+  - extension: workflows
+    command: speckit.workflows.ultraplan-tasks
+    enabled: true
+    optional: true
+    prompt: Run ultraplan to generate a deep task breakdown from spec.md and plan.md?
+    description: Deep task breakdown using extended analysis — opt-in replacement
+      for speckit.tasks
+    condition: null
+  before_commit:
+  - extension: workflows
+    command: speckit.workflows.review
+    enabled: true
+    optional: true
+    prompt: Confirm review is approved before committing?
+    description: Ensure review is complete before git commit
     condition: null
