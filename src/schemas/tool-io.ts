@@ -57,7 +57,7 @@ export const GetServerStatusOutputSchema = z.object({
 		nodeVersion: z.string(),
 		platform: z.string(),
 		arch: z.string(),
-		memoryUsage: z.record(z.number()),
+		memoryUsage: z.record(z.string(), z.number()),
 	}),
 });
 
@@ -118,7 +118,7 @@ export const ExecuteTransformationInputSchema = z.intersection(
 	z.object({
 		sync: z.boolean().optional().describe('Synchronous execution (default: false)'),
 		timeout: z.number().optional().describe('Timeout in milliseconds'),
-		params: z.record(z.string()).optional().describe('Transformation parameters'),
+		params: z.record(z.string(), z.string()).optional().describe('Transformation parameters'),
 		dryRun: z.boolean().optional().describe('Preview without execution'),
 		confirm: z.boolean().optional().describe('User confirmation required'),
 	}),
@@ -126,7 +126,7 @@ export const ExecuteTransformationInputSchema = z.intersection(
 	FilePathInputSchema.merge(z.object({
 		sync: z.boolean().optional(),
 		timeout: z.number().optional(),
-		params: z.record(z.string()).optional(),
+		params: z.record(z.string(), z.string()).optional(),
 		dryRun: z.boolean().optional(),
 		confirm: z.boolean().optional(),
 	})),
@@ -229,7 +229,7 @@ export const ExecuteJobInputSchema = z.intersection(
 	z.object({
 		sync: z.boolean().optional().describe('Synchronous execution (default: false)'),
 		timeout: z.number().optional().describe('Timeout in milliseconds'),
-		params: z.record(z.string()).optional().describe('Job parameters'),
+		params: z.record(z.string(), z.string()).optional().describe('Job parameters'),
 		dryRun: z.boolean().optional().describe('Preview without execution'),
 		confirm: z.boolean().optional().describe('User confirmation required'),
 	}),
@@ -237,7 +237,7 @@ export const ExecuteJobInputSchema = z.intersection(
 	FilePathInputSchema.merge(z.object({
 		sync: z.boolean().optional(),
 		timeout: z.number().optional(),
-		params: z.record(z.string()).optional(),
+		params: z.record(z.string(), z.string()).optional(),
 		dryRun: z.boolean().optional(),
 		confirm: z.boolean().optional(),
 	})),
@@ -351,7 +351,7 @@ export const EditArtifactOutputSchema = z.object({
 // Get Properties
 export const GetPropertiesInputSchema = XmlFormatInputSchema;
 export const GetPropertiesOutputSchema = z.object({
-	properties: z.record(z.string()),
+	properties: z.record(z.string(), z.string()),
 });
 
 // Sniff Step
@@ -365,7 +365,7 @@ export const SniffStepInputSchema = z.object({
 
 export const SniffStepOutputSchema = z.object({
 	step: z.string(),
-	rows: z.array(z.record(z.unknown())),
+	rows: z.array(z.record(z.string(), z.unknown())),
 	fields: z.array(z.object({
 		name: z.string(),
 		type: z.string(),

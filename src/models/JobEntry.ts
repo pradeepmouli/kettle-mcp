@@ -34,7 +34,7 @@ export const JobEntrySchema = z.object({
 	name: z.string().min(1, 'Job entry name is required'),
 	type: z.string().min(1, 'Job entry type is required'),
 	description: z.string().optional(),
-	configuration: z.record(z.any()),
+	configuration: z.record(z.string(), z.any()),
 	guiCoordinates: z
 		.object({
 			x: z.number(),
