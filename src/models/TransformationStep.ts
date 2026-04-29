@@ -20,12 +20,12 @@ export interface TransformationStep {
 export const TransformationStepSchema = z.object({
 	name: z.string().min(1, 'Step name is required'),
 	type: z.string().min(1, 'Step type is required'),
-	configuration: z.record(z.any()),
+	configuration: z.record(z.string(), z.any()),
 	xloc: z.number().min(0).max(9999).default(100),
 	yloc: z.number().min(0).max(9999).default(100),
 	distribute: z.boolean().optional(),
 	copies: z.number().optional(),
-	partitioning: z.record(z.any()).optional(),
+	partitioning: z.record(z.string(), z.any()).optional(),
 });
 
 /**
