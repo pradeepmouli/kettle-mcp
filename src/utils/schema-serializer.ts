@@ -76,9 +76,10 @@ export function serializeZodSchema(schema: z.ZodObject<any>): SerializedSchema {
 	for (const [name, fieldSchema] of Object.entries(shape)) {
 		const field: any = fieldSchema;
 
-		// Extract type name and normalize it
-		const typeName = field._def?.typeName || 'unknown';
-		const normalizedType = normalizeZodType(typeName, field);
+		// Extract raw type name — Zod v4 uses `_zod.def.type` (lowercase, e.g. "string")
+		// while Zod v3 used `_def.typeName` (e.g. "ZodString")
+		const rawTypeName: string = field._zod?.def?.type ?? field._def?.typeName ?? 'unknown';
+		const normalizedType = normalizeZodType(rawTypeName, field);
 
 		// Check if field is optional
 		const isOptional = field.isOptional?.() ?? false;
@@ -114,32 +115,48 @@ export function serializeZodSchema(schema: z.ZodObject<any>): SerializedSchema {
 /**
  * Normalize Zod type names to common, LLM-friendly type names.
  *
- * Converts Zod's internal type names (e.g., "ZodString", "ZodNumber") to
+ * Converts Zod's internal type names (e.g., "ZodString" in v3, "string" in v4) to
  * standard type names that are easier for LLM agents to understand and work
  * with (e.g., "string", "number").
  *
  * Handles wrapper types (ZodOptional, ZodNullable, ZodDefault) by unwrapping
  * them to get the underlying type.
  *
- * @param zodTypeName - Zod internal type name (e.g., "ZodString", "ZodOptional")
+ * @param rawTypeName - Raw type name from Zod internals. Zod v4 uses lowercase
+ *   strings (e.g. "string", "optional") from `_zod.def.type`; Zod v3 used
+ *   prefixed names (e.g. "ZodString", "ZodOptional") from `_def.typeName`.
  * @param fieldSchema - The Zod field schema for additional context (used to unwrap wrapper types)
  * @returns Normalized type name (e.g., "string", "number", "boolean", "array", "object")
  *
  * @example
- * // Direct type
- * normalizeZodType('ZodString', stringField) // Returns: "string"
+ * // Direct type (Zod v4)
+ * normalizeZodType('string', stringField) // Returns: "string"
  *
  * @example
- * // Optional wrapper
- * normalizeZodType('ZodOptional', optionalStringField) // Returns: "string"
+ * // Optional wrapper (Zod v4)
+ * normalizeZodType('optional', optionalStringField) // Returns: "string"
  *
  * @example
- * // Default wrapper
+ * // Default wrapper (Zod v3 legacy name)
  * normalizeZodType('ZodDefault', defaultNumberField) // Returns: "number"
  */
-function normalizeZodType(zodTypeName: string, fieldSchema: any): string {
-	// Map Zod type names to common names
+function normalizeZodType(rawTypeName: string, fieldSchema: any): string {
+	// Map Zod type names to common names.
+	// Zod v4 uses lowercase type names (e.g. "string", "number") stored in `_zod.def.type`.
+	// Zod v3 used prefixed names (e.g. "ZodString", "ZodNumber") in `_def.typeName`.
 	const typeMap: Record<string, string> = {
+		// Zod v4 lowercase names
+		string: 'string',
+		number: 'number',
+		boolean: 'boolean',
+		array: 'array',
+		object: 'object',
+		enum: 'enum',
+		union: 'union',
+		optional: 'optional',
+		nullable: 'nullable',
+		default: 'default',
+		// Zod v3 prefixed names (kept for backward compat)
 		ZodString: 'string',
 		ZodNumber: 'number',
 		ZodBoolean: 'boolean',
@@ -152,21 +169,39 @@ function normalizeZodType(zodTypeName: string, fieldSchema: any): string {
 		ZodDefault: 'default',
 	};
 
-	// Handle optional/nullable wrappers
-	if (zodTypeName === 'ZodOptional' || zodTypeName === 'ZodNullable') {
-		const innerType = fieldSchema._def?.innerType?._def?.typeName;
+	/**
+	 * Extract the type name of the wrapped inner schema for optional, nullable,
+	 * and default wrapper types.
+	 *
+	 * @param wrapper - A Zod wrapper schema (ZodOptional, ZodNullable, ZodDefault)
+	 * @returns The raw type name of the inner schema, or undefined if not found
+	 */
+	function getInnerTypeName(wrapper: any): string | undefined {
+		// Zod v4: inner type is at `_zod.def.innerType`; its type is `_zod.def.type`
+		const v4Inner = wrapper._zod?.def?.innerType;
+		if (v4Inner) {
+			return v4Inner._zod?.def?.type;
+		}
+		// Zod v3: inner type is at `_def.innerType`
+		return wrapper._def?.innerType?._def?.typeName;
+	}
+
+	// Handle optional/nullable wrappers by returning the underlying type
+	if (rawTypeName === 'optional' || rawTypeName === 'ZodOptional' ||
+		rawTypeName === 'nullable' || rawTypeName === 'ZodNullable') {
+		const innerType = getInnerTypeName(fieldSchema);
 		if (innerType && typeMap[innerType]) {
 			return typeMap[innerType];
 		}
 	}
 
-	// Handle default wrapper
-	if (zodTypeName === 'ZodDefault') {
-		const innerType = fieldSchema._def?.innerType?._def?.typeName;
+	// Handle default wrapper by returning the underlying type
+	if (rawTypeName === 'default' || rawTypeName === 'ZodDefault') {
+		const innerType = getInnerTypeName(fieldSchema);
 		if (innerType && typeMap[innerType]) {
 			return typeMap[innerType];
 		}
 	}
 
-	return typeMap[zodTypeName] || zodTypeName.replace('Zod', '').toLowerCase();
+	return typeMap[rawTypeName] || rawTypeName.replace('Zod', '').toLowerCase();
 }

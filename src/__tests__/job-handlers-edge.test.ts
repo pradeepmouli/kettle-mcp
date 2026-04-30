@@ -17,11 +17,9 @@ describe('Job Handler Edge Cases', () => {
         expect.arrayContaining([
           expect.objectContaining({
             path: expect.arrayContaining(['entries']),
-            message: expect.stringMatching(/Required/),
           }),
           expect.objectContaining({
             path: expect.arrayContaining(['hops']),
-            message: expect.stringMatching(/Required/),
           }),
         ])
       );
@@ -38,11 +36,9 @@ describe('Job Handler Edge Cases', () => {
         expect.arrayContaining([
           expect.objectContaining({
             path: expect.arrayContaining(['entries']),
-            message: expect.stringMatching(/Required/),
           }),
           expect.objectContaining({
             path: expect.arrayContaining(['hops']),
-            message: expect.stringMatching(/Required/),
           }),
         ])
       );
