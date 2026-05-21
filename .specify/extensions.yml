@@ -1,4 +1,10 @@
-installed: []
+installed:
+- doctor
+- optimize
+- review
+- sync
+- verify
+- workflows
 settings:
   auto_execute_hooks: true
 hooks:
