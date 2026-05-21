@@ -53,20 +53,20 @@
 	"packageManager": "pnpm@10.32.0",
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.29.0",
-		"@types/diff": "^7.0.2",
-		"diff": "^8.0.2",
-		"fast-xml-parser": "^5.3.0",
-		"zod": "^4.3.6"
+		"@types/diff": "^8.0.0",
+		"diff": "^9.0.0",
+		"fast-xml-parser": "^5.8.0",
+		"zod": "^4.4.3"
 	},
 	"devDependencies": {
-		"@types/node": "^24.8.1",
-		"@typescript-eslint/eslint-plugin": "^8.46.1",
-		"@typescript-eslint/parser": "^8.46.1",
-		"@vitest/coverage-v8": "^3.2.4",
-		"@vitest/ui": "^3.2.4",
-		"eslint": "^9.38.0",
-		"prettier": "^3.6.2",
-		"typescript": "^5.9.3",
-		"vitest": "^3.2.4"
+		"@types/node": "^25.9.1",
+		"@typescript-eslint/eslint-plugin": "^8.59.4",
+		"@typescript-eslint/parser": "^8.59.4",
+		"@vitest/coverage-v8": "^4.1.7",
+		"@vitest/ui": "^4.1.7",
+		"eslint": "^10.4.0",
+		"prettier": "^3.8.3",
+		"typescript": "^6.0.3",
+		"vitest": "^4.1.7"
 	}
 }
