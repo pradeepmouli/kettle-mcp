@@ -3,6 +3,7 @@
     /* Language and Environment */
     "target": "ES2022",
     "lib": ["ES2022"],
+    "types": ["node"],
     "module": "Node16",
     "moduleResolution": "Node16",
 
@@ -11,6 +12,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "removeComments": true,
     "importHelpers": true,
 
@@ -36,6 +38,7 @@
     "skipDefaultLibCheck": true,
 
     /* Path Mapping */
+    "ignoreDeprecations": "6.0",
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
