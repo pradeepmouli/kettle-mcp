@@ -106,3 +106,17 @@ coverage/
 # Spec-kit working files (optional - uncomment if you don't want to track these)
 # .specify/specs/*/research.md
 # .specify/specs/*/quickstart.md
+
+# BEGIN ai-artifacts
+.claude/
+.codex/
+.agents/
+.specify/
+.cursor/
+.continue/
+.aider/
+.roo/
+.windsurf/
+AGENTS.md
+GEMINI.md
+# END ai-artifacts
