@@ -55,7 +55,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true' && steps.typecheck.outcome == 'success' && steps.build.outcome == 'success'
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
           commit-message: 'chore(deps): update dependencies to latest'
           title: 'chore(deps): update dependencies to latest'
           body: |
