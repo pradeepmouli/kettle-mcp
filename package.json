@@ -52,21 +52,21 @@
 	},
 	"packageManager": "pnpm@10.32.0",
 	"dependencies": {
-		"@modelcontextprotocol/sdk": "^1.29.0",
+		"@modelcontextprotocol/sdk": "^1.30.0",
 		"@types/diff": "^8.0.0",
 		"diff": "^9.0.0",
-		"fast-xml-parser": "^5.8.0",
-		"zod": "^4.4.3"
+		"fast-xml-parser": "^5.11.1",
+		"zod": "^4.5.4"
 	},
 	"devDependencies": {
-		"@types/node": "^25.9.1",
-		"@typescript-eslint/eslint-plugin": "^8.60.1",
-		"@typescript-eslint/parser": "^8.60.1",
-		"@vitest/coverage-v8": "^4.1.8",
-		"@vitest/ui": "^4.1.8",
-		"eslint": "^10.4.1",
-		"prettier": "^3.8.3",
+		"@types/node": "^26.4.1",
+		"@typescript-eslint/eslint-plugin": "^8.69.0",
+		"@typescript-eslint/parser": "^8.69.0",
+		"@vitest/coverage-v8": "^5.0.0",
+		"@vitest/ui": "^5.0.0",
+		"eslint": "^10.10.0",
+		"prettier": "^3.9.6",
 		"typescript": "^7.0.2",
-		"vitest": "^4.1.8"
+		"vitest": "^5.0.0"
 	}
 }
