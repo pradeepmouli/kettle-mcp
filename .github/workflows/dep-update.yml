@@ -60,7 +60,7 @@ jobs:
             echo "has_token=true" >> $GITHUB_OUTPUT
           else
             echo "has_token=false" >> $GITHUB_OUTPUT
-            echo "::warning::RELEASE_TOKEN secret is not set — skipping PR creation. GITHUB_TOKEN cannot create PRs in this repo due to repository settings. Add a RELEASE_TOKEN PAT with repo scope to enable automated dep-update PRs."
+            echo "::warning::RELEASE_TOKEN secret is not set — skipping PR creation. GITHUB_TOKEN cannot create PRs in this repo due to repository settings. Add a fine-grained PAT scoped to this repository (Contents: read/write, Pull requests: read/write) as the RELEASE_TOKEN secret to enable automated dep-update PRs."
           fi
 
       - name: Create PR
