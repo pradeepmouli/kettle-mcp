@@ -51,11 +51,23 @@ jobs:
         continue-on-error: true
         id: build
 
+      - name: Check RELEASE_TOKEN
+        id: check_token
+        env:
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          if [ -n "$RELEASE_TOKEN" ]; then
+            echo "has_token=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_token=false" >> $GITHUB_OUTPUT
+            echo "::warning::RELEASE_TOKEN secret is not set — skipping PR creation. GITHUB_TOKEN cannot create PRs in this repo due to repository settings. Add a fine-grained PAT scoped to this repository (Contents: read/write, Pull requests: read/write) as the RELEASE_TOKEN secret to enable automated dep-update PRs."
+          fi
+
       - name: Create PR
-        if: steps.changes.outputs.changed == 'true' && steps.typecheck.outcome == 'success' && steps.build.outcome == 'success'
+        if: steps.changes.outputs.changed == 'true' && steps.typecheck.outcome == 'success' && steps.build.outcome == 'success' && steps.check_token.outputs.has_token == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RELEASE_TOKEN }}
           commit-message: 'chore(deps): update dependencies to latest'
           title: 'chore(deps): update dependencies to latest'
           body: |

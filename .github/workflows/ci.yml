@@ -14,7 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [24.x, 26.x]
+        node-version: [20, 22]
+    env:
+      ESLINT_USE_FLAT_CONFIG: 'false'
     steps:
       - uses: actions/checkout@v6
 
