@@ -28,7 +28,15 @@ jobs:
         run: pnpm install
 
       - name: Update dependencies
-        run: pnpm update --latest
+        # Packages held on TypeScript 6 (typedoc does not support 7) must survive `update --latest`
+        run: |
+          git ls-files '*package.json' | while read -r f; do
+            jq -e '(.devDependencies.typescript // "") | startswith("^6")' "$f" > /dev/null && dirname "$f"
+          done > "$RUNNER_TEMP/ts6-dirs" || true
+          pnpm update --latest
+          while read -r d; do
+            if [ "$d" = "." ]; then pnpm add -D -w 'typescript@^6.0.3'; else pnpm --filter "./$d" add -D 'typescript@^6.0.3'; fi
+          done < "$RUNNER_TEMP/ts6-dirs"
 
       - name: Check for changes
         id: changes
@@ -50,6 +58,20 @@ jobs:
         run: pnpm run build
         continue-on-error: true
         id: build
+
+      - name: Generate changeset
+        if: steps.changes.outputs.changed == 'true' && steps.typecheck.outcome == 'success' && steps.build.outcome == 'success'
+        run: |
+          pkgs=$(git diff --name-only -- '*package.json' | while read -r f; do jq -r 'select(.private != true and .name != null) | .name' "$f"; done | sort -u)
+          if [ -n "$pkgs" ]; then
+            {
+              echo '---'
+              for p in $pkgs; do echo "\"$p\": patch"; done
+              echo '---'
+              echo
+              echo '- chore(deps): update dependencies to latest'
+            } > ".changeset/deps-update-$(date +%s).md"
+          fi
 
       - name: Create PR
         if: steps.changes.outputs.changed == 'true' && steps.typecheck.outcome == 'success' && steps.build.outcome == 'success'
