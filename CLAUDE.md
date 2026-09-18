@@ -11,7 +11,7 @@ MCP server for Pentaho Kettle job and transformation management. Exposes 25+ too
 - `fast-xml-parser` — parse/write Kettle XML (j2x)
 - `zod` — I/O schema validation
 - `diff` — unified diff generation for change tracking
-- Vitest (test runner), ESLint + `@typescript-eslint`, Prettier
+- Vitest (test runner), oxlint, Prettier
 
 ## Project Structure
 
@@ -38,8 +38,8 @@ pnpm run build            # Compile TypeScript → dist/
 pnpm run dev              # Watch mode
 pnpm test                 # Run all tests (vitest)
 pnpm run test:coverage    # Tests with coverage
-pnpm run lint             # ESLint
-pnpm run lint:fix         # ESLint --fix
+pnpm run lint             # oxlint
+pnpm run lint:fix         # oxlint --fix
 pnpm run format           # Prettier write
 pnpm run format:check     # Prettier check
 pnpm run docs:dev         # VitePress dev server
@@ -49,7 +49,7 @@ pnpm run docs:build       # Build docs site
 ## Code Style
 
 - TypeScript strict mode, no `any`
-- ESLint with `@typescript-eslint` rules
+- oxlint rules (`.oxlintrc.json`)
 - Prettier for formatting
 - Conventional commits
 
