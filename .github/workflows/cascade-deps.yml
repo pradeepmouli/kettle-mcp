@@ -22,7 +22,7 @@ jobs:
             --jq '.[] | select(.autoMergeRequest == null) | .number' | \
           while read pr; do
             echo "Enabling auto-merge on #$pr"
-            gh pr merge "$pr" --squash --auto 2>&1 || true
+            gh pr merge "$pr" --merge --auto 2>&1 || true
           done
 
           echo ""
