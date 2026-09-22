@@ -63,7 +63,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true' && steps.typecheck.outcome == 'success' && steps.build.outcome == 'success'
         run: |
           pkgs=$(git diff --name-only -- '*package.json' | while read -r f; do jq -r 'select(.private != true and .name != null) | .name' "$f"; done | sort -u)
-          if [ -n "$pkgs" ]; then
+          if [ -n "$pkgs" ] && [ -d .changeset ]; then
             {
               echo '---'
               for p in $pkgs; do echo "\"$p\": patch"; done
