@@ -16,6 +16,7 @@ jobs:
       - name: Cascade dependabot PRs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
         run: |
           echo "=== Enabling auto-merge on new dependabot PRs ==="
           gh pr list --author app/dependabot --json number,autoMergeRequest \
