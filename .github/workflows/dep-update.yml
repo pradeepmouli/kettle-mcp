@@ -33,7 +33,7 @@ jobs:
           git ls-files '*package.json' | while read -r f; do
             jq -e '(.devDependencies.typescript // "") | startswith("^6")' "$f" > /dev/null && dirname "$f"
           done > "$RUNNER_TEMP/ts6-dirs" || true
-          pnpm update --latest
+          pnpm update --latest -r
           while read -r d; do
             if [ "$d" = "." ]; then pnpm add -D -w 'typescript@^6.0.3'; else pnpm --filter "./$d" add -D 'typescript@^6.0.3'; fi
           done < "$RUNNER_TEMP/ts6-dirs"
@@ -81,7 +81,7 @@ jobs:
           commit-message: 'chore(deps): update dependencies to latest'
           title: 'chore(deps): update dependencies to latest'
           body: |
-            Automated weekly dependency update via `pnpm update --latest`.
+            Automated weekly dependency update via `pnpm update --latest -r`.
 
             - Type-check: ✅ passed
             - Build: ✅ passed
