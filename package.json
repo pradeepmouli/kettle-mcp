@@ -58,12 +58,12 @@
 		"zod": "^4.6.7"
 	},
 	"devDependencies": {
-		"@types/node": "^26.6.7",
-		"@vitest/coverage-v8": "^5.1.1",
-		"@vitest/ui": "^5.1.1",
+		"@types/node": "^26.6.11",
+		"@vitest/coverage-v8": "^5.1.2",
+		"@vitest/ui": "^5.1.2",
 		"oxlint": "^1.95.0",
 		"prettier": "^3.10.1",
 		"typescript": "^7.0.2",
-		"vitest": "^5.1.1"
+		"vitest": "^5.1.2"
 	}
 }
